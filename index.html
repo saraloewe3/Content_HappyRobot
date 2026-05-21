@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HappyRobot &mdash; Forged in Fire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F5F3EE;
+  --cream-deep:#EDEAE3;
+  --black:#111111;
+  --ink:#1A1A1A;
+  --mid:#888;
+  --rule:rgba(17,17,17,0.08);
+  --rule-solid:#D8D5CE;
+  --rule-dk:rgba(255,255,255,0.06);
+  --accent:#C8B89A;
+  --accent2:#9A8B7A;
+  --serif:'DM Serif Display',Georgia,serif;
+  --mono:'DM Mono',monospace;
+  --sans:'Syne',sans-serif;
+  --bebas:'Bebas Neue',sans-serif;
+  --expo:cubic-bezier(0.16,1,0.3,1);
+  --quart:cubic-bezier(0.76,0,0.24,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--black);font-family:var(--sans);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--black);color:var(--cream)}
+
+/* CURSOR */
+#cdot{position:fixed;width:7px;height:7px;background:var(--black);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);will-change:left,top;transition:opacity .18s}
+#cring{position:fixed;width:34px;height:34px;border:1.5px solid rgba(17,17,17,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);will-change:left,top;transition:width .38s var(--expo),height .38s var(--expo),background .22s,border-color .22s}
+#cring.hov{width:60px;height:60px;background:var(--black);mix-blend-mode:difference;border-color:transparent}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:62px;background:rgba(245,243,238,.96);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border-bottom:1px solid var(--rule)}
+.nav-logo{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--black);text-decoration:none;display:flex;align-items:center;gap:.65rem}
+.nav-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;flex-shrink:0}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);text-decoration:none;position:relative;padding-bottom:2px;transition:color .25s}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--black);transition:width .32s var(--expo)}
+.nav-links a:hover,.nav-links a.active{color:var(--black)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+
+/* SECTIONS */
+section{padding:8rem 3.5rem;position:relative}
+section.dark{background:var(--black);color:var(--cream)}
+.sl{font-family:var(--mono);font-size:.63rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:4rem;display:flex;align-items:center;gap:1rem;color:var(--mid)}
+.sl .num{font-size:.58rem;color:var(--accent);border:1px solid var(--accent);padding:3px 9px;letter-spacing:.1em}
+.dark .sl{color:#3a3a3a}
+.dark .sl .num{color:var(--accent);border-color:var(--accent)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .85s var(--expo),transform .85s var(--expo)}
+.rv.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.07s}.d2{transition-delay:.16s}.d3{transition-delay:.26s}.d4{transition-delay:.36s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:62px 3.5rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(17,17,17,.042) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,17,.042) 1px,transparent 1px);background-size:72px 72px;pointer-events:none}
+.hero-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.032'/%3E%3C/svg%3E");background-size:220px;pointer-events:none;opacity:.5}
+.hero-inner{position:relative;z-index:1}
+.hero-eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);margin-bottom:1.8rem;display:flex;align-items:center;gap:1.2rem}
+.hero-eyebrow::before{content:'';display:block;width:44px;height:1px;background:var(--accent);flex-shrink:0}
+.hero-title{font-family:var(--bebas);font-size:clamp(5.5rem,14vw,13.5rem);line-height:.86;letter-spacing:.01em;color:var(--black);position:relative;z-index:1}
+.hero-title .ital{font-family:var(--serif);font-style:italic;font-size:clamp(4.2rem,11vw,10.5rem);display:block;letter-spacing:-.01em;color:var(--black)}
+
+/* VIDEO HERO */
+.video-hero-wrapper{margin-top:3.2rem;width:100%;position:relative;border-radius:8px;overflow:hidden;box-shadow:0 2px 4px rgba(17,17,17,.05),0 12px 40px rgba(17,17,17,.1),0 32px 80px rgba(17,17,17,.08)}
+.video-hero-wrapper::before{content:'';display:block;padding-top:56.25%}
+.video-hero-wrapper iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
+.video-caption{display:flex;align-items:center;justify-content:space-between;margin-top:1.6rem;padding-top:1.6rem;border-top:1px solid var(--rule);flex-wrap:wrap;gap:1.5rem}
+.video-caption-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.hero-stats{display:flex;gap:3.5rem;flex-wrap:wrap}
+.hs p:first-child{font-family:var(--bebas);font-size:2.2rem;line-height:1;color:var(--black);letter-spacing:.02em}
+.hs p:last-child{font-family:var(--mono);font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-top:.22rem}
+
+/* MARQUEE */
+.mq-band{overflow:hidden;background:var(--black);border-top:1px solid #181818;border-bottom:1px solid #181818;padding:1.05rem 0}
+.mq-track{display:flex;white-space:nowrap;animation:mq-run 24s linear infinite}
+.mq-track.rev{animation-direction:reverse;animation-duration:30s}
+.mq-item{font-family:var(--bebas);font-size:.95rem;letter-spacing:.1em;color:#282828;padding:0 2.5rem;flex-shrink:0;display:inline-flex;align-items:center;gap:2.5rem}
+.mq-item::after{content:'\2736';font-size:.45rem;color:var(--accent)}
+@keyframes mq-run{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ABSTRACT */
+.ag{display:grid;grid-template-columns:1.1fr .9fr;gap:6rem;align-items:start}
+.at{font-family:var(--serif);font-size:clamp(2.4rem,4vw,3.8rem);line-height:1.06;margin-bottom:2.5rem;font-weight:400}
+.at em{font-style:italic}
+.ab p{font-size:1rem;line-height:1.88;color:#3a3a3a;margin-bottom:1.5rem}
+.ab p:last-child{margin-bottom:0}
+.ab em{font-style:italic}
+.ab strong{font-weight:700;color:var(--black)}
+.meta-card{border:1px solid var(--rule-solid);padding:2.2rem 2rem;margin-bottom:1.1rem;will-change:transform;transform-style:preserve-3d;transition:border-color .3s,box-shadow .4s var(--expo)}
+.meta-card:hover{border-color:var(--accent2);box-shadow:0 14px 44px rgba(17,17,17,.07)}
+.meta-card h4{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:.9rem}
+.meta-card p,.meta-card ul{font-size:.88rem;line-height:1.78;color:var(--ink)}
+.meta-card ul{list-style:none}
+.meta-card ul li{display:flex;gap:.65rem;align-items:flex-start;padding:.38rem 0;border-bottom:1px solid var(--rule);font-size:.87rem}
+.meta-card ul li:last-child{border-bottom:none}
+.meta-card ul li::before{content:'\2192';font-family:var(--mono);color:var(--accent);flex-shrink:0;margin-top:1px}
+.meta-highlight{background:var(--black);color:var(--cream);padding:2.2rem 2rem;margin-bottom:1.1rem}
+.meta-highlight h4{color:#444;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.9rem}
+.meta-highlight p{font-size:.88rem;line-height:1.78;color:#bbb}
+.meta-highlight strong{color:var(--cream);font-weight:600}
+
+/* OUTLINE */
+.oh{font-family:var(--bebas);font-size:clamp(3.5rem,7.5vw,7rem);letter-spacing:.02em;line-height:.88;color:var(--cream);margin-bottom:5rem}
+.oi{display:grid;grid-template-columns:90px 1fr;gap:2.5rem;padding:2.8rem 0;border-bottom:1px solid rgba(255,255,255,.055);transition:all .35s var(--expo);cursor:default}
+.oi:hover{background:#161616;padding-left:3.5rem;padding-right:3.5rem;margin:0 -3.5rem}
+.on{font-family:var(--bebas);font-size:3.8rem;line-height:1;color:#232323;align-self:start;transition:color .3s}
+.oi:hover .on{color:var(--accent)}
+.oc h3{font-family:var(--serif);font-size:1.42rem;font-weight:400;font-style:italic;color:var(--cream);margin-bottom:.7rem;line-height:1.28}
+.oc p{font-size:.86rem;line-height:1.82;color:#585858;max-width:660px}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+.tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid #282828;color:#4a4a4a;transition:border-color .2s,color .2s}
+.oi:hover .tag{border-color:#383838;color:#666}
+
+/* BROWSER CHROME */
+.bm{border-radius:11px;overflow:hidden;box-shadow:0 1px 2px rgba(17,17,17,.05),0 8px 24px rgba(17,17,17,.08),0 24px 60px rgba(17,17,17,.1);will-change:transform;transform-style:preserve-3d;transition:transform .5s var(--expo),box-shadow .5s var(--expo)}
+.bm-bar{height:40px;background:#E3E1DC;display:flex;align-items:center;padding:0 12px;gap:0;border-bottom:1px solid #CECCCA;flex-shrink:0}
+.bm-dots{display:flex;gap:5.5px;flex-shrink:0;margin-right:10px}
+.bm-dot{width:11px;height:11px;border-radius:50%}
+.bm-dot.r{background:#FF5F57}.bm-dot.y{background:#FFBD2E}.bm-dot.g{background:#28C840}
+.bm-tab-wrap{display:flex;align-items:flex-end;flex:1;overflow:hidden;height:100%}
+.bm-tab{display:flex;align-items:center;gap:6px;height:100%;padding:0 12px;background:#DDDBD6;border-radius:6px 6px 0 0;font-family:var(--mono);font-size:.57rem;color:#777;max-width:200px;overflow:hidden;flex-shrink:0;white-space:nowrap}
+.bm-tab.active{background:#FAFAF8;color:#333}
+.bm-tab-icon{width:12px;height:12px;background:var(--black);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bm-tab-icon span{font-family:var(--bebas);font-size:.42rem;color:var(--cream);line-height:1;display:block}
+.bm-tab-icon.li{background:#0A66C2}
+.bm-tab-icon.li span{font-family:var(--sans);font-weight:800}
+.bm-addr{flex-shrink:0;margin-left:10px;background:#D9D7D2;border-radius:5px;padding:4px 10px;display:flex;align-items:center;gap:5px;min-width:180px;max-width:260px}
+.bm-addr-lock{width:8px;height:8px;flex-shrink:0;opacity:.5;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 8 10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='1' y='4' width='6' height='6' rx='1' fill='%23666'/%3E%3Cpath d='M2.5 4V2.5a1.5 1.5 0 013 0V4' stroke='%23666' stroke-width='1.2' fill='none'/%3E%3C/svg%3E") no-repeat center/contain}
+.bm-addr-text{font-family:var(--mono);font-size:.57rem;color:#777;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-body{background:#fff;overflow-y:auto;max-height:500px}
+.bm-body::-webkit-scrollbar{width:3px}
+.bm-body::-webkit-scrollbar-thumb{background:rgba(17,17,17,.12);border-radius:2px}
+
+/* BLOG MOCKUP CONTENT */
+.blog-chrome-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2.2rem .9rem;border-bottom:1px solid var(--rule);background:#FAFAF8}
+.blog-logo{display:flex;align-items:center;gap:.55rem}
+.blog-logo-box{width:24px;height:24px;background:var(--black);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blog-logo-box span{font-family:var(--bebas);font-size:.72rem;color:var(--cream);line-height:1}
+.blog-logo-name{font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--black);letter-spacing:.01em}
+.blog-nav{display:flex;gap:1.4rem;align-items:center}
+.blog-nav a{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);text-decoration:none}
+.blog-nav a.cta{background:var(--black);color:var(--cream);padding:5px 12px;font-size:.52rem;border-radius:2px}
+.blog-content{padding:2.2rem 2.5rem}
+.blog-cat{font-family:var(--mono);font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem}
+.blog-h1{font-family:var(--serif);font-size:1.6rem;line-height:1.16;margin-bottom:.85rem;font-weight:400;font-style:italic;color:var(--ink)}
+.blog-byline{display:flex;align-items:center;gap:1.4rem;padding:.8rem 0;margin-bottom:1.4rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.blog-byline-author{display:flex;align-items:center;gap:.5rem}
+.blog-avatar-sm{width:20px;height:20px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blog-avatar-sm span{font-family:var(--bebas);font-size:.48rem;color:var(--cream)}
+.blog-byline span{font-family:var(--mono);font-size:.57rem;letter-spacing:.08em;text-transform:uppercase;color:#aaa}
+.blog-p{font-size:.88rem;line-height:1.86;color:#2a2a2a;margin-bottom:.95rem}
+.blog-h2{font-family:var(--serif);font-size:1.05rem;font-weight:400;font-style:italic;color:var(--black);margin:1.6rem 0 .7rem}
+.blog-pull{border-left:3px solid var(--black);padding:.7rem 1rem;margin:1.4rem 0;font-size:.94rem;font-style:italic;color:var(--ink);font-family:var(--serif);line-height:1.55;background:rgba(17,17,17,.02)}
+.blog-proof{display:flex;gap:2rem;padding:1.1rem 1.4rem;background:#F8F7F3;border-left:3px solid var(--accent);margin:1.3rem 0}
+.blog-proof-stat p:first-child{font-family:var(--bebas);font-size:1.55rem;line-height:1;color:var(--black);letter-spacing:.02em}
+.blog-proof-stat p:last-child{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:.15rem}
+
+/* DISTRIBUTION */
+.dist-intro{max-width:680px;margin-bottom:5rem}
+.dist-intro p{font-size:1rem;line-height:1.88;color:#444}
+.dist-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule-solid)}
+.dc{background:var(--cream);padding:3.2rem 2.8rem;transition:background .28s}
+.dc:hover{background:var(--cream-deep)}
+.dc.dk{background:var(--black);color:var(--cream)}.dc.dk:hover{background:#161616}
+.dc.fw{grid-column:1/-1;background:#EDEAE3}.dc.fw:hover{background:#E7E4DC}
+.dc-type{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.85rem;display:block}
+.dc h3{font-family:var(--bebas);font-size:1.85rem;letter-spacing:.04em;line-height:1;margin-bottom:1.3rem;color:inherit}
+.dc p{font-size:.86rem;line-height:1.82;color:#555;margin-bottom:.8rem}
+.dc.dk p{color:#6e6e6e}
+.dc-note{border-top:1px solid var(--rule);padding-top:.9rem;margin-top:.9rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);line-height:1.72}
+.dc.dk .dc-note{border-color:rgba(255,255,255,.06);color:#3a3a3a}
+
+/* SEQUENCE TABLE */
+.seq-wrap{margin-top:5.5rem}
+.seq-title{font-family:var(--bebas);font-size:2.4rem;letter-spacing:.04em;margin-bottom:2.5rem;color:var(--black)}
+.seq-table{width:100%;border-collapse:collapse}
+.seq-table th{font-family:var(--mono);font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;text-align:left;padding:1.1rem 1.8rem;border-bottom:1px solid rgba(17,17,17,.14);color:var(--mid);font-weight:400}
+.seq-table td{padding:1.45rem 1.8rem;border-bottom:1px solid rgba(17,17,17,.07);font-size:.86rem;vertical-align:top;line-height:1.72;color:#333}
+.seq-table tbody tr:last-child td{border-bottom:none}
+.seq-table tr:hover td{background:rgba(200,184,154,.055)}
+.seq-wk{font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--black);letter-spacing:.07em;white-space:nowrap}
+.seq-pill{display:inline-block;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border:1px solid rgba(17,17,17,.1);color:var(--mid);margin-top:.5rem;border-radius:2px}
+
+/* LINKEDIN / CAROUSEL */
+.csi{display:grid;grid-template-columns:1fr 380px;gap:5.5rem;align-items:start}
+.cl h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.1rem);line-height:1.14;font-weight:400;margin-bottom:1.4rem;color:var(--cream)}
+.cl .sub{font-size:.87rem;line-height:1.88;color:#545454;max-width:460px;margin-bottom:2.5rem}
+.cl .feed-copy{border:1px solid #1e1e1e;padding:1.4rem 1.6rem;font-family:var(--mono);font-size:.75rem;line-height:1.78;color:#6a6a6a;letter-spacing:.02em;border-radius:2px}
+.cl .feed-copy strong{color:#aaa}
+
+/* PHONE FRAME */
+.phone-outer{width:300px;margin:0 auto;background:linear-gradient(145deg,#1e1e1e,#141414);border-radius:46px;padding:13px;box-shadow:0 0 0 1px #2a2a2a,0 0 0 2px #1a1a1a,0 48px 120px rgba(0,0,0,.6),0 8px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.045);will-change:transform;transform-style:preserve-3d;transition:transform .5s var(--expo)}
+.phone-inner{background:#F6F4F0;border-radius:35px;overflow:hidden;height:620px;display:flex;flex-direction:column;position:relative}
+.phone-island{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:90px;height:26px;background:#141414;border-radius:13px;z-index:30;box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+.phone-island::after{content:'';position:absolute;inset:3px 18px;background:rgba(255,255,255,.035);border-radius:9px}
+
+/* LinkedIn app chrome inside phone */
+.li-phone-header{background:#F6F4F0;padding:46px 0 0;flex-shrink:0}
+.li-phone-topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.1rem .65rem;border-bottom:1px solid rgba(0,0,0,.07)}
+.li-phone-logo{display:flex;align-items:center;gap:.45rem}
+.li-phone-logo-box{width:26px;height:26px;background:#0A66C2;border-radius:5px;display:flex;align-items:center;justify-content:center}
+.li-phone-logo-box span{font-family:var(--sans);font-size:.65rem;font-weight:800;color:#fff;line-height:1}
+.li-phone-logo-name{font-family:var(--sans);font-size:.76rem;font-weight:700;color:#0A66C2;letter-spacing:-.005em}
+.li-phone-nav{display:flex;gap:.9rem}
+.li-phone-nav-item{font-family:var(--mono);font-size:.48rem;letter-spacing:.06em;text-transform:uppercase;color:#aaa;padding-bottom:2px}
+.li-phone-nav-item.on{color:var(--black);border-bottom:2px solid var(--black)}
+
+/* CAROUSEL */
+.cvp{flex:1;overflow:hidden;position:relative}
+.ctrack{display:flex;height:100%;transition:transform .52s var(--quart);will-change:transform}
+.cs{min-width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:1.8rem 1.5rem;position:relative;overflow:hidden}
+.cs-cream{background:#F5F3EE}.cs-white{background:#fff}.cs-dark{background:#0E0E0E}
+.cs-num{font-family:var(--mono);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:#c0bdb6;margin-bottom:.9rem}
+.cs-dark .cs-num{color:#333}
+.cs-label{font-family:var(--mono);font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.65rem}
+.cs-headline{font-family:var(--bebas);font-size:1.88rem;letter-spacing:.02em;line-height:.96;color:var(--black);width:100%}
+.cs-dark .cs-headline{color:#F0EDE6}
+.cs-body{font-size:.78rem;line-height:1.72;color:#666;margin-top:.85rem;max-width:230px}
+.cs-dark .cs-body{color:#5a5a5a}
+.cs-num-big{font-family:var(--bebas);font-size:3.1rem;line-height:1;color:var(--black);margin-top:.5rem;letter-spacing:.02em}
+.cs-num-label{font-family:var(--mono);font-size:.57rem;color:#aaa;margin-top:.3rem}
+.cs-divider{width:100%;height:1px;background:rgba(0,0,0,.08);margin:1.1rem 0}
+.cs-verdict{font-family:var(--serif);font-size:.98rem;font-style:italic;line-height:1.5;color:#E8E5DE;margin-top:.5rem}
+.cs-cta{font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:#444;margin-top:1.1rem;border-top:1px solid rgba(255,255,255,.07);padding-top:.8rem;width:100%}
+.cs-vs{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;width:100%;margin-top:.85rem}
+.cs-vs-col{padding:.75rem .85rem;border-radius:3px}
+.cs-vs-col.lt{background:rgba(0,0,0,.04)}.cs-vs-col.dk{background:#111}
+.cs-vs-title{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;padding-bottom:.35rem;border-bottom:1px solid rgba(0,0,0,.07);color:#bbb}
+.cs-vs-col.dk .cs-vs-title{border-color:rgba(255,255,255,.05);color:#444}
+.cs-vs-item{font-size:.68rem;line-height:1.6;padding:.2rem 0;color:#555}
+.cs-vs-col.dk .cs-vs-item{color:#888}
+.cs-brand{position:absolute;top:.9rem;right:1.1rem;font-family:var(--bebas);font-size:.62rem;letter-spacing:.1em;color:var(--accent);opacity:.55}
+.cs-dark .cs-brand{opacity:.35}
+
+/* Carousel controls */
+.carousel-ctrl{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;background:#F6F4F0;border-top:1px solid rgba(0,0,0,.06);flex-shrink:0}
+.ctrl-dots{display:flex;gap:5px}
+.ctrl-dot{width:5px;height:5px;border-radius:50%;background:#ccc;transition:background .25s,width .28s ease;cursor:none}
+.ctrl-dot.on{background:var(--black);width:15px;border-radius:3px}
+.ctrl-btn{width:30px;height:30px;border:1px solid rgba(17,17,17,.12);background:transparent;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;transition:background .2s,border-color .2s;font-size:.72rem;color:var(--black);flex-shrink:0}
+.ctrl-btn:hover{background:var(--black);color:var(--cream);border-color:var(--black)}
+
+/* DESKTOP LI CARD */
+.li-feed-wrap{background:#f3f2ef;padding:1.3rem}
+.li-card{background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);overflow:hidden}
+.li-card-top{display:flex;align-items:flex-start;gap:.85rem;padding:1.2rem 1.4rem 1rem}
+.li-card-ava{width:46px;height:46px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.li-card-ava span{font-family:var(--bebas);font-size:1rem;color:var(--cream)}
+.li-card-ava-badge{position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;background:#0A66C2;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center}
+.li-card-ava-badge span{font-family:var(--sans);font-size:.35rem;font-weight:800;color:#fff;line-height:1}
+.li-card-name{font-size:.85rem;font-weight:700;color:var(--ink);line-height:1.3}
+.li-card-desc{font-size:.7rem;color:#777;line-height:1.5;margin-top:.1rem}
+.li-card-meta{font-size:.63rem;color:#aaa;margin-top:.1rem;display:flex;align-items:center;gap:.4rem}
+.li-globe{display:inline-block;width:11px;height:11px;border:1.2px solid #aaa;border-radius:50%;position:relative}
+.li-globe::after{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:#aaa;transform:translateY(-50%)}
+.li-card-body{padding:.1rem 1.4rem 1.1rem}
+.li-card-body p{font-size:.83rem;line-height:1.72;color:var(--ink);margin-bottom:.65rem}
+.li-card-body p:last-of-type{margin-bottom:0}
+.li-card-body strong{font-weight:700}
+.li-card-body em{font-style:italic}
+.li-card-verdict{border-left:2.5px solid var(--black);padding:.55rem .8rem;margin:.85rem 0;font-size:.76rem;color:#3a3a3a;font-family:var(--mono);line-height:1.65;background:rgba(17,17,17,.023);border-radius:0 2px 2px 0}
+.li-card-reactions{padding:.6rem 1.4rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,.07)}
+.li-react-left{display:flex;align-items:center;gap:.5rem}
+.li-react-icons{display:flex}
+.li-react-icons span{width:16px;height:16px;border-radius:50%;border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.5rem;margin-right:-4px}
+.li-react-icons span:nth-child(1){background:#378FE9}.li-react-icons span:nth-child(2){background:#7FC15E}.li-react-icons span:nth-child(3){background:#E7A33E}
+.li-react-count{font-size:.68rem;color:#777}
+.li-card-actions{display:flex;gap:0;border-top:1px solid rgba(0,0,0,.07)}
+.li-action{flex:1;display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.55rem .4rem;font-family:var(--mono);font-size:.54rem;letter-spacing:.05em;text-transform:uppercase;color:#777;cursor:none;transition:background .2s;border-right:1px solid rgba(0,0,0,.05)}
+.li-action:last-child{border-right:none}
+.li-action:hover{background:rgba(0,0,0,.04);color:var(--ink)}
+.li-action-icon{font-size:.75rem;line-height:1}
+
+/* ADS */
+.ads-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+.ad-variant-label{font-family:var(--mono);font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem}
+.ad-digital{background:#13202C;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;position:relative;overflow:hidden;will-change:transform;transform-style:preserve-3d;transition:transform .4s var(--expo),box-shadow .4s var(--expo)}
+.ad-digital:hover{box-shadow:0 28px 70px rgba(15,25,36,.5)}
+.ad-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 18% 28%,rgba(32,72,108,.42) 0%,transparent 58%)}
+.ad-scanlines{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.008) 2px,rgba(255,255,255,.008) 4px)}
+.ad-brand-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,184,154,.62);position:relative;z-index:1}
+.ad-headline{font-family:var(--bebas);font-size:clamp(1.8rem,3.2vw,2.85rem);line-height:.93;letter-spacing:.015em;color:#fff;margin-bottom:.7rem;position:relative;z-index:1}
+.ad-body{font-size:.77rem;line-height:1.68;color:#607888;max-width:280px;margin-bottom:1.4rem;position:relative;z-index:1}
+.ad-cta{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);text-decoration:none;border-bottom:1px solid rgba(245,243,238,.22);padding-bottom:2px;transition:border-color .2s;width:fit-content;position:relative;z-index:1}
+.ad-cta::after{content:'\2192'}
+.ad-cta:hover{border-color:var(--cream)}
+.ad-ooh{background:var(--cream);border:1px solid var(--rule-solid);aspect-ratio:21/6;display:flex;align-items:center;padding:2.5rem 4rem;position:relative;overflow:hidden;will-change:transform;transform-style:preserve-3d;transition:transform .4s var(--expo),box-shadow .4s var(--expo)}
+.ad-ooh:hover{box-shadow:0 20px 60px rgba(17,17,17,.09)}
+.ad-ooh-bar{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--black)}
+.ad-ooh-headline{font-family:var(--bebas);font-size:clamp(2rem,4vw,3.5rem);line-height:.93;letter-spacing:.015em;color:var(--black)}
+.ad-ooh-sub{font-family:var(--sans);font-size:clamp(.9rem,1.5vw,1.1rem);font-weight:300;letter-spacing:.04em;color:#444;margin-top:.55rem}
+.ad-ooh-sig{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-top:.9rem}
+.copy-note{margin-top:1.4rem;font-size:.83rem;color:#666;line-height:1.78;border-left:2px solid var(--rule-solid);padding-left:1.2rem}
+
+/* VISUAL DIRECTION TABLE */
+.vd-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+.vd-card{padding:2.8rem;border:1px solid rgba(17,17,17,.09)}
+.vd-card h4{font-family:var(--bebas);font-size:1.65rem;letter-spacing:.04em;margin-bottom:2.2rem;color:var(--black)}
+.vd-tbl{width:100%;border-collapse:collapse}
+.vd-tbl td{padding:1.1rem 0;border-bottom:1px solid rgba(17,17,17,.07);vertical-align:top;font-size:.85rem;line-height:1.72}
+.vd-tbl tr:last-child td{border-bottom:none}
+.vd-key{font-family:var(--mono);font-size:.57rem;letter-spacing:.13em;text-transform:uppercase;color:var(--mid);padding-right:1.6rem;white-space:nowrap;width:86px;padding-top:1.12rem}
+.vd-val{color:#333}
+.swatches{display:flex;gap:5px;margin-top:.55rem}
+.swatch{width:20px;height:20px;border:1px solid rgba(0,0,0,.08);border-radius:2px}
+
+/* TILT */
+.tilt{transform-style:preserve-3d;will-change:transform;transition:transform .6s var(--expo)}
+
+/* VERDICT */
+.verdict{background:var(--black);padding:10rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.verdict-bg{position:absolute;font-family:var(--bebas);font-size:clamp(10rem,22vw,20rem);line-height:1;color:#161616;white-space:nowrap;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;transition:letter-spacing .9s var(--expo);letter-spacing:.02em}
+.verdict:hover .verdict-bg{letter-spacing:.14em}
+.verdict-inner{position:relative;z-index:1}
+.verdict-q{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.8rem);font-style:italic;line-height:1.18;max-width:720px;margin:0 auto 2rem;font-weight:400;color:var(--cream)}
+.verdict-attr{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#333}
+
+footer{background:var(--black);border-top:1px solid #161616;padding:2.5rem 3.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#2e2e2e}
+
+.cr{position:sticky;top:88px}
+
+@media(max-width:960px){
+  section{padding:5rem 1.8rem}
+  nav{padding:0 1.8rem}
+  .hero{padding:62px 1.8rem 4rem}
+  .nav-links{display:none}
+  .ag,.dist-grid,.ads-grid,.vd-grid{grid-template-columns:1fr}
+  .dist-grid{gap:1px}.dc.fw{grid-column:auto}
+  .csi{grid-template-columns:1fr;gap:3rem}
+  .phone-outer{width:280px}
+  .ad-ooh{aspect-ratio:auto;padding:2.5rem}
+  body{cursor:auto}
+  #cdot,#cring{display:none}
+  .hero-stats{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo"><span class="nav-dot"></span>HappyRobot &mdash; Case Study</a>
+  <ul class="nav-links">
+    <li><a href="#abstract" class="nl">01 / Blog</a></li>
+    <li><a href="#distribution" class="nl">02 / Distribution</a></li>
+    <li><a href="#linkedin" class="nl">03 / LinkedIn</a></li>
+    <li><a href="#ads" class="nl">04 / Ads</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="hgrid"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow rv">Content Marketing Case Study &mdash; Master Narrative &amp; Distribution Framework</p>
+    <h1 class="hero-title rv d1">FORGED<br><span class="ital">in Fire.</span></h1>
+    <div class="video-hero-wrapper rv d2">
+      <iframe src="https://www.youtube.com/embed/E9XBbT9eN9E?rel=0&amp;modestbranding=1&amp;color=white&amp;iv_load_policy=3" title="HappyRobot &mdash; AI Workforce Infrastructure" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-caption rv d3">
+      <span class="video-caption-label">HappyRobot Inc. &mdash; AI Workforce Infrastructure</span>
+      <div class="hero-stats">
+        <div class="hs"><p>4</p><p>Deliverables</p></div>
+        <div class="hs"><p>75%</p><p>Autonomous Resolution</p></div>
+        <div class="hs"><p>2</p><p>Verticals Proven</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq-band"><div class="mq-track"><span class="mq-item">BLOG POST ABSTRACT</span><span class="mq-item">CHANNEL DISTRIBUTION</span><span class="mq-item">LINKEDIN CAROUSEL</span><span class="mq-item">AD COPY &amp; VISUAL DIRECTION</span><span class="mq-item">FORGED IN FIRE NARRATIVE</span><span class="mq-item">OPERATIONAL PROVENANCE</span><span class="mq-item">BLOG POST ABSTRACT</span><span class="mq-item">CHANNEL DISTRIBUTION</span><span class="mq-item">LINKEDIN CAROUSEL</span><span class="mq-item">AD COPY &amp; VISUAL DIRECTION</span><span class="mq-item">FORGED IN FIRE NARRATIVE</span><span class="mq-item">OPERATIONAL PROVENANCE</span></div></div>
+
+<!-- 01 ABSTRACT -->
+<section id="abstract">
+  <div class="sl rv"><span class="num">01</span> Blog Post Abstract</div>
+  <div class="ag">
+    <div>
+      <h2 class="at rv"><em>The Infrastructure<br>That Survived<br>the Fire</em></h2>
+      <div class="ab rv d1">
+        <p>Most enterprises don&rsquo;t deploy AI into their operations. They deploy AI into a <em>demo</em> of their operations &mdash; clean data, controlled exceptions, favorable conditions. Then production begins.</p>
+        <p>The driver doesn&rsquo;t answer. The legacy system drops the feed. Three workflows collide at 2&nbsp;AM and the escalation path leads to a human who is asleep. This is not an edge case. This is Tuesday.</p>
+        <p>The question executives are not asking their AI vendors &mdash; but should be &mdash; is not &ldquo;what can your system do?&rdquo; It is <strong>&ldquo;what has your system already survived?&rdquo;</strong></p>
+        <p>HappyRobot&rsquo;s AI workforce infrastructure was not introduced to this class of operational complexity. It was built inside it &mdash; forged in global logistics, where margins are razor-thin, legacy systems don&rsquo;t speak to each other, and a single missed handoff is a P&amp;L event before noon.</p>
+        <p>That operational origin is not a marketing credential. It is a structural guarantee.</p>
+      </div>
+    </div>
+    <div class="rv d2">
+      <div class="meta-highlight">
+        <h4>Strategic Takeaway</h4>
+        <p><strong>Operational Provenance.</strong> Where was the infrastructure built and what did it survive? A new lens for every future vendor evaluation.</p>
+      </div>
+      <div class="meta-card tilt">
+        <h4>Target Audience</h4>
+        <ul>
+          <li>COOs, CDOs, VPs of Operations at $1B+ enterprises</li>
+          <li>Operators in airlines, financial services, utilities, retail, manufacturing</li>
+          <li>Executives accountable when AI breaks production</li>
+        </ul>
+      </div>
+      <div class="meta-card tilt">
+        <h4>The Hook</h4>
+        <p>The exact moment every enterprise AI deployment reveals its flaw &mdash; not in the demo, but on the first Tuesday when actual operations meet the system.</p>
+      </div>
+      <div class="meta-card tilt">
+        <h4>Intellectual Tension</h4>
+        <p>Infrastructure built for optimal conditions vs. one forged under adversarial ones. Resolved not with comfort &mdash; but with a choice.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BROWSER BLOG PREVIEW -->
+  <div style="margin-top:6rem">
+    <div class="sl rv"><span class="num">01&ndash;B</span> Desktop Reading Experience</div>
+    <div class="bm tilt rv d1" style="max-width:900px">
+      <div class="bm-bar">
+        <div class="bm-dots"><div class="bm-dot r"></div><div class="bm-dot y"></div><div class="bm-dot g"></div></div>
+        <div class="bm-tab-wrap">
+          <div class="bm-tab active"><div class="bm-tab-icon"><span>HR</span></div>The Infrastructure That Survived the Fire &mdash; HappyRobot</div>
+        </div>
+        <div class="bm-addr">
+          <span class="bm-addr-lock"></span>
+          <span class="bm-addr-text">happyrobot.ai/blog/infrastructure-survived-the-fire</span>
+        </div>
+      </div>
+      <div class="bm-body">
+        <div class="blog-chrome-header">
+          <div class="blog-logo">
+            <div class="blog-logo-box"><span>HR</span></div>
+            <span class="blog-logo-name">HappyRobot</span>
+          </div>
+          <nav class="blog-nav">
+            <a href="#">Product</a>
+            <a href="#">Customers</a>
+            <a href="#">Blog</a>
+            <a href="#" class="cta">Request Demo</a>
+          </nav>
+        </div>
+        <div class="blog-content">
+          <div class="blog-cat">Operations Intelligence &mdash; Executive Briefing</div>
+          <h1 class="blog-h1">The Infrastructure That Survived the Fire</h1>
+          <div class="blog-byline">
+            <div class="blog-byline-author">
+              <div class="blog-avatar-sm"><span>HR</span></div>
+              <span>HappyRobot Editorial</span>
+            </div>
+            <span>14 min read</span>
+            <span>2026</span>
+          </div>
+          <p class="blog-p">Most enterprises don&rsquo;t deploy AI into their operations. They deploy AI into a <em>demo</em> of their operations. Clean data. Controlled exceptions. A vendor who arrived with a slide deck calibrated to pass.</p>
+          <p class="blog-p">Then production begins. The driver doesn&rsquo;t answer. The legacy system drops the feed at 2&nbsp;AM. Two freight workflows collide and the escalation path resolves at a phone that is off.</p>
+          <div class="blog-pull">&ldquo;The question executives are not asking &mdash; but should be &mdash; is not &lsquo;what can your system do?&rsquo; It is &lsquo;what has your system already survived?&rsquo;&rdquo;</div>
+          <h2 class="blog-h2">I.&nbsp; You Haven&rsquo;t Built Automation. You&rsquo;ve Built a Suggestion Box.</h2>
+          <p class="blog-p">Three production failure modes: <strong>silent degradation</strong> (resolution quality drops without triggering alerts), <strong>exception collapse</strong> (the system hands off to a human the moment a workflow diverges), <strong>legacy fragmentation</strong> (integrations that passed the pilot break against production API rate limits).</p>
+          <div class="blog-proof">
+            <div class="blog-proof-stat"><p>75%</p><p>Autonomous Resolution &mdash; U.S. Xpress</p></div>
+            <div class="blog-proof-stat"><p>DHL</p><p>Global Multi-Region Deployment at Scale</p></div>
+          </div>
+          <h2 class="blog-h2">II.&nbsp; Tuesday Is Not an Edge Case.</h2>
+          <p class="blog-p">Every $1B+ enterprise runs four structural conditions simultaneously: legacy system fragmentation, exception density that outpaces classification models, real-time SLA pressure that makes degraded performance a P&amp;L event, and zero tolerance for silent failure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTLINE DARK -->
+<section class="dark" id="outline">
+  <div class="sl rv"><span class="num">01&ndash;C</span> Structural Outline</div>
+  <h2 class="oh rv">Five<br>Arguments.</h2>
+  <div class="oi rv"><div class="on">I</div><div class="oc"><h3>You Haven&rsquo;t Built Automation. You&rsquo;ve Built a Suggestion Box.</h3><p>Three production failure modes: silent degradation, exception collapse, legacy fragmentation. If the architecture was never designed to survive without the human fallback, what happens when the enterprise finally removes it?</p><div class="tags"><span class="tag">Silent Degradation</span><span class="tag">Exception Collapse</span><span class="tag">Legacy Fragmentation</span></div></div></div>
+  <div class="oi rv"><div class="on">II</div><div class="oc"><h3>Tuesday Is Not an Edge Case.</h3><p>Four structural conditions every $1B+ enterprise runs simultaneously: legacy fragmentation, exception density, real-time SLA pressure, zero tolerance for silent failure. Every executive recognizes their own operations.</p><div class="tags"><span class="tag">SLA Pressure</span><span class="tag">Zero Silent Failure</span><span class="tag">$1B+ Enterprise</span></div></div></div>
+  <div class="oi rv"><div class="on">III</div><div class="oc"><h3>What the Fire Actually Teaches.</h3><p>Logistics is the definitive stress environment. Aviation, financial services, and retail share identical structural failure modes expressed in different operational vocabularies. The infrastructure doesn&rsquo;t need to be re-proven. It needs to be re-deployed.</p><div class="tags"><span class="tag">Aviation</span><span class="tag">Financial Services</span><span class="tag">Retail</span><span class="tag">Cross-Vertical</span></div></div></div>
+  <div class="oi rv"><div class="on">IV</div><div class="oc"><h3>The Proof Is Not a Benchmark.</h3><p>DHL: global multi-region deployment at scale. U.S. Xpress: 75% autonomous resolution on critical workflows. Results produced inside the pressure, not a controlled environment. The architecture travels. The production record comes with it.</p><div class="tags"><span class="tag">DHL &mdash; Global Scale</span><span class="tag">U.S. Xpress 75%</span><span class="tag">Production Record</span></div></div></div>
+  <div class="oi rv"><div class="on">V</div><div class="oc"><h3>Two Types of AI Infrastructure Now Exist.</h3><p>Type One: built in controlled environments, fails under production load. Type Two: forged in adversarial conditions, architected for the Tuesday where everything goes wrong. The fire wasn&rsquo;t the obstacle. It was the qualification.</p><div class="tags"><span class="tag">Type One vs Type Two</span><span class="tag">Adversarial Architecture</span><span class="tag">Category Definition</span></div></div></div>
+</section>
+
+<div class="mq-band"><div class="mq-track rev"><span class="mq-item">DHL &mdash; GLOBAL DEPLOYMENT</span><span class="mq-item">U.S. XPRESS &mdash; 75% AUTONOMOUS</span><span class="mq-item">OPERATIONAL PROVENANCE</span><span class="mq-item">ZERO SILENT FAILURE</span><span class="mq-item">PRODUCTION RECORD</span><span class="mq-item">SLA PRESSURE</span><span class="mq-item">DHL &mdash; GLOBAL DEPLOYMENT</span><span class="mq-item">U.S. XPRESS &mdash; 75% AUTONOMOUS</span><span class="mq-item">OPERATIONAL PROVENANCE</span><span class="mq-item">ZERO SILENT FAILURE</span><span class="mq-item">PRODUCTION RECORD</span><span class="mq-item">SLA PRESSURE</span></div></div>
+
+<!-- 02 DISTRIBUTION -->
+<section id="distribution">
+  <div class="sl rv"><span class="num">02</span> Channel Distribution Plan &mdash; Hub &amp; Spoke</div>
+  <div class="dist-intro rv"><p>The blog post is the hub. Every channel drives the right executive into it through the right format at the right moment. One thesis. Five touchpoints. Six weeks. By the time a target executive is on a sales call, the narrative is already familiar.</p></div>
+  <div class="dist-grid rv">
+    <div class="dc dk"><span class="dc-type">Organic / Founder Voice</span><h3>LinkedIn Founder Post</h3><p>One idea from the article, written in the Founder&rsquo;s own voice. Not a summary &mdash; a single provocation. Ends on unresolved tension. The article is the resolution.</p><div class="dc-note">Executives trust other executives. Lateral authority transfer. No pitch &mdash; pure provocation that opens pattern-matching in the reader&rsquo;s own operational memory.</div></div>
+    <div class="dc"><span class="dc-type">Organic / Owned Audience</span><h3>Newsletter &mdash; Provenance Framework</h3><p>Seven days after the LinkedIn post. Delivers the three-question Operational Provenance Framework as a standalone, immediately usable tool. Both paths lead back to the hub.</p><div class="dc-note">Pre-sales qualification embedded inside content. No friction, no form. Converts passive readers into active framework users.</div></div>
+    <div class="dc"><span class="dc-type">Organic / Long-form</span><h3>Blog + GEO Positioning</h3><p>Published ungated. Structured to answer the exact queries enterprise buyers run before evaluating an AI vendor. Proof anchors with specific metrics serve GEO positioning &mdash; making the article citable by AI-powered research tools.</p><div class="dc-note">Ungated friction removal + AI search citation loops create compounding inbound without ad spend.</div></div>
+    <div class="dc dk"><span class="dc-type">Paid / ABM Precision</span><h3>LinkedIn ABM Paid Social</h3><p>Same thesis, vertical-specific vocabulary. An airline COO sees crew coordination failure copy. A bank CFO sees compliance audit exposure copy. Seven-word headline maximum. One proof anchor. One link.</p><p>Runs concurrent with the organic post. Executives who see both within 48 hours experience reinforcement, not repetition.</p><div class="dc-note">Surgical vocabulary match triggers category recognition before the first sales call.</div></div>
+    <div class="dc fw"><span class="dc-type">Paid / Brand Priming</span><h3>Digital OOH &mdash; Airport &amp; Enterprise Corridors</h3><p>Seven words or fewer. O&rsquo;Hare, JFK, Canary Wharf. No product pitch. A single question that sticks. Function is not conversion &mdash; it is priming. Activated during the two weeks surrounding major industry conferences.</p><div class="dc-note">When the ABM ad finds the executive two days later, the brand is already recognized. Recognition precedes persuasion by design.</div></div>
+  </div>
+  <div class="seq-wrap rv">
+    <div class="seq-title">Sequencing</div>
+    <table class="seq-table">
+      <thead><tr><th>Timeline</th><th>Action</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr><td><span class="seq-wk">Week 1</span></td><td>Founder LinkedIn post + ABM ads launch simultaneously</td><td>Organic provocation + paid interception<br><span class="seq-pill">Simultaneous</span></td></tr>
+        <tr><td><span class="seq-wk">Week 2</span></td><td>Newsletter deploys + OOH activates at conference corridors</td><td>Deepen existing audience + prime target accounts in physical transit</td></tr>
+        <tr><td><span class="seq-wk">Week 3</span></td><td>Rotate ABM creative by vertical</td><td>Re-engage exposed accounts without ad fatigue<br><span class="seq-pill">Fresh Signal</span></td></tr>
+        <tr><td><span class="seq-wk">Weeks 3&ndash;6</span></td><td>SEO supporting articles publish; each links to hub</td><td>Authority compounds, inbound grows, GEO citations accumulate</td></tr>
+        <tr><td><span class="seq-wk">Week 6+</span></td><td>ABM retargeting &mdash; demo-focused creative only</td><td>Convert article readers into pipeline<br><span class="seq-pill">Revenue Stage</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 03 LINKEDIN -->
+<section class="dark" id="linkedin">
+  <div class="sl rv"><span class="num">03</span> LinkedIn Asset &mdash; Post + Carousel</div>
+  <div class="csi">
+    <div class="cl">
+      <h2 class="rv">Standalone thought leadership. Not a blog summary.</h2>
+      <p class="sub rv d1">One sharp idea in operational vocabulary that makes every enterprise COO stop and recognize their own infrastructure &mdash; before they have heard of HappyRobot.</p>
+      <div class="feed-copy rv d2"><strong>Feed copy (before carousel):</strong><br><br>"Your AI passed every test. Then it met your actual operations.<br>Ask for the incident report. Not the demo. &rarr; Swipe."</div>
+      <div style="margin-top:3rem" class="rv d3">
+        <div style="font-family:var(--mono);font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;color:#383838;margin-bottom:1.1rem">Desktop View</div>
+        <div class="bm tilt" style="max-width:520px">
+          <div class="bm-bar">
+            <div class="bm-dots"><div class="bm-dot r"></div><div class="bm-dot y"></div><div class="bm-dot g"></div></div>
+            <div class="bm-tab-wrap">
+              <div class="bm-tab active"><div class="bm-tab-icon li"><span>in</span></div>HappyRobot &mdash; LinkedIn</div>
+            </div>
+            <div class="bm-addr"><span class="bm-addr-lock"></span><span class="bm-addr-text">linkedin.com/company/happyrobot</span></div>
+          </div>
+          <div class="bm-body" style="padding:0">
+            <div style="background:#f3f2ef;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-bottom:1px solid #E0DDD8">
+              <div style="display:flex;align-items:center;gap:.45rem"><div style="width:24px;height:24px;background:#0A66C2;border-radius:4px;display:flex;align-items:center;justify-content:center"><span style="font-family:var(--sans);font-size:.6rem;font-weight:800;color:#fff">in</span></div><span style="font-family:var(--sans);font-size:.72rem;font-weight:700;color:#0A66C2">LinkedIn</span></div>
+              <div style="display:flex;gap:1.1rem"><span style="font-family:var(--mono);font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;color:#aaa">Home</span><span style="font-family:var(--mono);font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;color:#0A66C2;border-bottom:1.5px solid #0A66C2;padding-bottom:1px">Feed</span><span style="font-family:var(--mono);font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;color:#aaa">Jobs</span></div>
+            </div>
+            <div class="li-feed-wrap">
+              <div class="li-card">
+                <div class="li-card-top">
+                  <div class="li-card-ava"><span>HR</span><div class="li-card-ava-badge"><span>+</span></div></div>
+                  <div>
+                    <div class="li-card-name">HappyRobot</div>
+                    <div class="li-card-desc">AI Workforce Infrastructure &middot; 12,400 followers</div>
+                    <div class="li-card-meta">3h<span class="li-globe"></span></div>
+                  </div>
+                </div>
+                <div class="li-card-body">
+                  <p><strong>Most AI deployments don&rsquo;t fail at launch.</strong></p>
+                  <p>They fail on a Tuesday. Three weeks in. When the legacy system drops the feed, the driver doesn&rsquo;t answer, and two workflows collide at 2&nbsp;AM with no human fallback in the escalation path.</p>
+                  <p>That&rsquo;s not a bug. That&rsquo;s the architecture revealing itself.</p>
+                  <p>The question no one asks their AI vendor before signing: <strong>Where was this system actually built?</strong></p>
+                  <p>Not piloted. Not fine-tuned. <em>Built.</em></p>
+                  <div class="li-card-verdict">The fire wasn&rsquo;t the obstacle.<br>It was the qualification.<br><br>Ask for the incident report. Not the demo.</div>
+                </div>
+                <div class="li-card-reactions">
+                  <div class="li-react-left">
+                    <div class="li-react-icons"><span>&#128077;</span><span>&#129309;</span><span>&#128161;</span></div>
+                    <span class="li-react-count">1,247</span>
+                  </div>
+                  <span style="font-family:var(--mono);font-size:.6rem;color:#aaa">214 comments &middot; 89 reposts</span>
+                </div>
+                <div class="li-card-actions">
+                  <div class="li-action"><span class="li-action-icon">&#128077;</span>Like</div>
+                  <div class="li-action"><span class="li-action-icon">&#128172;</span>Comment</div>
+                  <div class="li-action"><span class="li-action-icon">&#8592;&#8594;</span>Repost</div>
+                  <div class="li-action"><span class="li-action-icon">&#9993;</span>Send</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE CAROUSEL -->
+    <div class="cr rv d2">
+      <div style="font-family:var(--mono);font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;color:#383838;margin-bottom:1.2rem;text-align:center">Mobile Carousel View</div>
+      <div class="phone-outer tilt" id="cphone">
+        <div class="phone-inner">
+          <div class="phone-island"></div>
+          <div class="li-phone-header">
+            <div class="li-phone-topbar">
+              <div class="li-phone-logo">
+                <div class="li-phone-logo-box"><span>in</span></div>
+                <span class="li-phone-logo-name">LinkedIn</span>
+              </div>
+              <div class="li-phone-nav">
+                <div class="li-phone-nav-item on">Home</div>
+                <div class="li-phone-nav-item">Network</div>
+                <div class="li-phone-nav-item">Jobs</div>
+              </div>
+            </div>
+          </div>
+          <div class="cvp">
+            <div class="ctrack" id="ctrack">
+              <div class="cs cs-cream"><span class="cs-brand">HappyRobot</span><div class="cs-num">01 / 05</div><div class="cs-label">The Hook</div><div class="cs-headline">Your AI passed every test. Then it met your actual operations.</div><p class="cs-body">The discomfort of recognition does the work.</p></div>
+              <div class="cs cs-white"><span class="cs-brand">HappyRobot</span><div class="cs-num">02 / 05</div><div class="cs-label">The Flaw</div><div class="cs-headline">Built in a lab. Deployed in reality.</div><div class="cs-vs"><div class="cs-vs-col lt"><div class="cs-vs-title">The Demo</div><div class="cs-vs-item">Clean data</div><div class="cs-vs-item">Controlled scope</div><div class="cs-vs-item">Optimal conditions</div></div><div class="cs-vs-col dk"><div class="cs-vs-title">Tuesday</div><div class="cs-vs-item">Cascading failures</div><div class="cs-vs-item">Legacy fragmentation</div><div class="cs-vs-item">2 AM. No fallback.</div></div></div></div>
+              <div class="cs cs-dark"><span class="cs-brand">HappyRobot</span><div class="cs-num">03 / 05</div><div class="cs-label">The Standard</div><div class="cs-headline">Where was this system actually built?</div><p class="cs-body">Not demoed. Not piloted. Built inside the most operationally hostile environment on earth.</p></div>
+              <div class="cs cs-cream"><span class="cs-brand">HappyRobot</span><div class="cs-num">04 / 05</div><div class="cs-label">The Proof</div><div class="cs-num-big">75%</div><div class="cs-num-label">Autonomous resolution &mdash; U.S. Xpress</div><div class="cs-divider"></div><div class="cs-num-big" style="font-size:2.1rem">DHL</div><div class="cs-num-label">Global multi-region deployment at scale</div></div>
+              <div class="cs cs-dark"><span class="cs-brand">HappyRobot</span><div class="cs-num">05 / 05</div><div class="cs-verdict">&ldquo;The fire wasn&rsquo;t the obstacle. It was the qualification.&rdquo;</div><div class="cs-cta">Ask for the incident report. Not the demo.</div></div>
+            </div>
+          </div>
+          <div class="carousel-ctrl">
+            <button class="ctrl-btn" id="cprev">&larr;</button>
+            <div class="ctrl-dots" id="cdots"><div class="ctrl-dot on"></div><div class="ctrl-dot"></div><div class="ctrl-dot"></div><div class="ctrl-dot"></div><div class="ctrl-dot"></div></div>
+            <button class="ctrl-btn" id="cnext">&rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 ADS -->
+<section id="ads">
+  <div class="sl rv"><span class="num">04</span> Ad Copy &amp; Visual Direction</div>
+  <div class="ads-grid rv">
+    <div>
+      <div class="ad-variant-label">Variant 1 &mdash; Digital ABM / LinkedIn &middot; Named C-Suite Accounts &middot; COO / CDO / VP Operations</div>
+      <div class="ad-digital tilt">
+        <div class="ad-glow"></div><div class="ad-scanlines"></div>
+        <div class="ad-brand-tag">HappyRobot</div>
+        <div><div class="ad-headline">Your AI has never<br>seen a Tuesday.</div><p class="ad-body">Every enterprise workflow breaks under real load. HappyRobot was built inside that load &mdash; not introduced to it.</p><a href="#" class="ad-cta">See how it holds in production</a></div>
+      </div>
+      <div class="copy-note">&ldquo;Tuesday&rdquo; names the exact moment every deployment meets reality. No product features. No claims. One scene. Total recognition before the body copy runs. The COO has already lived through a failed AI pilot &mdash; the word unlocks the memory.</div>
+    </div>
+    <div>
+      <div class="ad-variant-label">Variant 2 &mdash; OOH Airport Billboard &middot; O&rsquo;Hare &middot; JFK &middot; Heathrow &middot; Canary Wharf</div>
+      <div class="ad-ooh tilt">
+        <div class="ad-ooh-bar"></div>
+        <div style="padding-left:2rem"><div class="ad-ooh-headline">Forged in the world&rsquo;s most<br>unforgiving industry.</div><div class="ad-ooh-sub">Built for yours.</div><div class="ad-ooh-sig">&mdash; HappyRobot</div></div>
+      </div>
+      <div class="copy-note">At three-second dwell time, photography competes with the words. This message is the visual. &ldquo;Forged&rdquo; implies survival, not design. &ldquo;Built for yours&rdquo; closes without naming a vertical &mdash; every industry reads itself into it.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:6rem">
+    <div class="sl rv"><span class="num">04&ndash;B</span> Visual Direction</div>
+    <div class="vd-grid rv">
+      <div class="vd-card">
+        <h4>ABM Digital Ad</h4>
+        <table class="vd-tbl">
+          <tr><td class="vd-key">Concept</td><td class="vd-val">Operations control center. Lone operator facing live monitoring screens &mdash; shot from behind. No faces. Real data visible: timestamps, route IDs, exception flags. The human is present but secondary to the system.</td></tr>
+          <tr><td class="vd-key">Palette</td><td class="vd-val">Desaturated 40%. Cool blue-green from screens. No warm tones. Functional, not aspirational.<div class="swatches"><div class="swatch" style="background:#1C2128"></div><div class="swatch" style="background:#2D4A5A"></div><div class="swatch" style="background:#4A7A8A;opacity:.75"></div><div class="swatch" style="background:#8899AA"></div></div></td></tr>
+          <tr><td class="vd-key">Type</td><td class="vd-val">Inter Black 900 headline on translucent white bar. Inter Light 300 body. Extreme weight contrast &mdash; the shift is the design system. No stylization.</td></tr>
+          <tr><td class="vd-key">Signal</td><td class="vd-val">The COO recognizes the scene before reading a word. Recognition precedes persuasion. The ad confirms what they already know about operational fragility.</td></tr>
+        </table>
+      </div>
+      <div class="vd-card">
+        <h4>OOH Airport Billboard</h4>
+        <table class="vd-tbl">
+          <tr><td class="vd-key">Concept</td><td class="vd-val">Pure typographic execution. No photography. No graphic elements. Off-white background. Black type only. In an airport full of competing visual noise, absence of noise signals confidence.</td></tr>
+          <tr><td class="vd-key">Palette</td><td class="vd-val">HappyRobot brand base. Nothing else.<div class="swatches"><div class="swatch" style="background:#F5F3EE;border:1px solid rgba(17,17,17,.15)"></div><div class="swatch" style="background:#111111"></div></div></td></tr>
+          <tr><td class="vd-key">Type</td><td class="vd-val">Inter Black 900 at maximum optical scale. Attribution in mono Light 300. Two cognitive registers &mdash; impact, then attribution. Weight contrast is the only graphic element.</td></tr>
+          <tr><td class="vd-key">Signal</td><td class="vd-val">The brand that doesn&rsquo;t fight for attention, in a context where every other brand does. Restraint at billboard scale reads as established authority.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERDICT -->
+<div class="verdict">
+  <div class="verdict-bg">FIRE</div>
+  <div class="verdict-inner">
+    <blockquote class="verdict-q rv">&ldquo;The fire wasn&rsquo;t the obstacle.<br>It was the qualification.&rdquo;</blockquote>
+    <p class="verdict-attr rv d1">HappyRobot &mdash; Master Narrative Framework</p>
+  </div>
+</div>
+
+<footer>
+  <p>HappyRobot Inc. &mdash; Content Marketing Case Study</p>
+  <p>&ldquo;Forged in Fire&rdquo; &mdash; Category Authority at Scale</p>
+  <p>4 Deliverables &middot; 2026</p>
+</footer>
+
+<script>
+(function(){
+/* CURSOR */
+const dot=document.getElementById('cdot'),ring=document.getElementById('cring');
+let mx=-200,my=-200,rx=-200,ry=-200;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+(function tick(){
+  if(dot){dot.style.left=mx+'px';dot.style.top=my+'px'}
+  if(ring){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px'}
+  requestAnimationFrame(tick);
+})();
+document.querySelectorAll('a,button,.oi,.dc,.tilt,.meta-card,.bm,.phone-outer,.ad-digital,.ad-ooh').forEach(function(el){
+  el.addEventListener('mouseenter',function(){if(ring)ring.classList.add('hov');if(dot)dot.style.opacity='0'});
+  el.addEventListener('mouseleave',function(){if(ring)ring.classList.remove('hov');if(dot)dot.style.opacity='1'});
+});
+
+/* 3D TILT */
+document.querySelectorAll('.tilt').forEach(function(c){
+  c.addEventListener('mousemove',function(e){
+    var r=c.getBoundingClientRect();
+    var dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+    var dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+    c.style.transform='perspective(880px) rotateX('+(-dy*4.5)+'deg) rotateY('+(dx*4.5)+'deg) scale3d(1.018,1.018,1.018)';
+    c.style.transition='transform .08s ease';
+  });
+  c.addEventListener('mouseleave',function(){
+    c.style.transform='perspective(880px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+    c.style.transition='transform .65s cubic-bezier(0.16,1,0.3,1)';
+  });
+});
+
+/* SCROLL REVEAL */
+var rvEls=document.querySelectorAll('.rv');
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+},{threshold:0.07,rootMargin:'0px 0px -36px 0px'});
+rvEls.forEach(function(el){obs.observe(el)});
+
+/* NAV ACTIVE */
+var nls=document.querySelectorAll('.nl');
+var sects=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',function(){
+  var cur='';
+  sects.forEach(function(s){if(window.scrollY>=s.offsetTop-90)cur=s.id});
+  nls.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur)});
+},{passive:true});
+
+/* CAROUSEL */
+var track=document.getElementById('ctrack');
+var dots=document.querySelectorAll('#cdots .ctrl-dot');
+var prev=document.getElementById('cprev');
+var next=document.getElementById('cnext');
+var idx=0,tot=5;
+function goTo(i){
+  idx=(i+tot)%tot;
+  track.style.transform='translateX(-'+idx*100+'%)';
+  dots.forEach(function(d,j){d.classList.toggle('on',j===idx)});
+}
+next.addEventListener('click',function(){goTo(idx+1)});
+prev.addEventListener('click',function(){goTo(idx-1)});
+var ts=0;
+var cvp=document.querySelector('.cvp');
+cvp.addEventListener('touchstart',function(e){ts=e.touches[0].clientX},{passive:true});
+cvp.addEventListener('touchend',function(e){var d=ts-e.changedTouches[0].clientX;if(Math.abs(d)>38)goTo(d>0?idx+1:idx-1)},{passive:true});
+var auto=setInterval(function(){goTo(idx+1)},4400);
+[next,prev].forEach(function(b){b.addEventListener('click',function(){clearInterval(auto);auto=setInterval(function(){goTo(idx+1)},4400)})});
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')goTo(idx+1);if(e.key==='ArrowLeft')goTo(idx-1)});
+
+/* HERO PARALLAX */
+var ht=document.querySelector('.hero-title');
+var hg=document.getElementById('hgrid');
+window.addEventListener('scroll',function(){
+  var y=window.scrollY;
+  if(ht)ht.style.transform='translateY('+(y*.14)+'px)';
+  if(hg)hg.style.transform='translateY('+(y*.05)+'px)';
+},{passive:true});
+
+/* MAGNETIC NAV */
+document.querySelectorAll('.nav-links a').forEach(function(l){
+  l.addEventListener('mousemove',function(e){
+    var r=l.getBoundingClientRect();
+    l.style.transform='translate('+((e.clientX-r.left-r.width/2)*.27)+'px,'+((e.clientY-r.top-r.height/2)*.27)+'px)';
+    l.style.transition='transform .05s linear';
+  });
+  l.addEventListener('mouseleave',function(){
+    l.style.transform='translate(0,0)';
+    l.style.transition='transform .5s cubic-bezier(0.16,1,0.3,1)';
+  });
+});
+})();
+</script>
+</body>
+</html>
