@@ -6,278 +6,1039 @@
 <title>Sara Diaz — Content Case Study · HappyRobot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap" rel="stylesheet" />
 <style>
+
+/* ============================================================
+   TOKENS
+============================================================ */
 :root {
-  --cream:#F5F3EE;--cream-dark:#EDEAE2;--charcoal:#191919;--ink:#111111;
-  --white:#FFFFFF;--muted:#7A7672;--rule:#D8D4CC;--rule-dark:#2E2E2E;
-  --font-display:'Fraunces',Georgia,serif;--font-sans:'Inter',system-ui,sans-serif;
-  --max-content:760px;--max-wide:1040px;--nav-h:64px;
+  --cream:    #F5F3EE;
+  --cream-alt:#EDEAE3;
+  --white:    #FFFFFF;
+  --ink:      #111111;
+  --charcoal: #191919;
+  --muted:    #4A4642;
+  --muted-lt: #6B6863;
+  --rule:     #D0CCC3;
+  --rule-dk:  #2A2A2A;
+  --font:     'Inter', system-ui, -apple-system, sans-serif;
+  --max:      760px;
+  --wide:     1060px;
+  --nav-h:    60px;
+  --ease:     cubic-bezier(0.16, 1, 0.3, 1);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--cream);color:var(--charcoal);font-family:var(--font-sans);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{cursor:pointer;border:none;background:none;font:inherit}
-ul{list-style:none}
 
-/* ANIMATION */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .72s cubic-bezier(.16,1,.3,1),transform .72s cubic-bezier(.16,1,.3,1)}
-.reveal.in{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}
-.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
-
-/* LAYOUT */
-.container{width:100%;max-width:var(--max-content);margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}
-.container--wide{max-width:var(--max-wide);margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}
-
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:900;background:rgba(245,243,238,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--rule);display:flex;align-items:center}
-.nav__inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--max-wide);margin:0 auto;padding:0 24px}
-.nav__brand{display:flex;align-items:center;text-decoration:none}
-.nav__logo{height:20px;width:auto;display:block}
-.nav__links{display:flex;align-items:center;gap:32px}
-.nav__links a{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:-.01em;transition:color .2s ease;position:relative}
-.nav__links a::after{content:'';position:absolute;bottom:-2px;left:0;right:100%;height:1px;background:var(--ink);transition:right .25s cubic-bezier(.16,1,.3,1)}
-.nav__links a:hover{color:var(--ink)}
-.nav__links a:hover::after{right:0}
-.nav__burger{display:none;flex-direction:column;gap:4px;width:24px;padding:4px 0}
-.nav__burger span{display:block;height:1.5px;background:var(--ink);transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .2s;transform-origin:center}
-.nav__burger.is-open span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
-.nav__burger.is-open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.nav__burger.is-open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
-.nav__overlay{display:none;position:fixed;inset:0;top:var(--nav-h);background:var(--cream);z-index:800;flex-direction:column;justify-content:center;align-items:center;gap:40px;opacity:0;pointer-events:none;transition:opacity .3s ease}
-.nav__overlay.is-open{opacity:1;pointer-events:auto}
-.nav__overlay a{font-family:var(--font-display);font-size:clamp(32px,8vw,56px);font-weight:900;color:var(--ink);letter-spacing:-.03em;transition:opacity .2s}
-.nav__overlay a:hover{opacity:.4}
-@media(max-width:680px){.nav__links{display:none}.nav__burger{display:flex}.nav__overlay{display:flex}}
-
-/* HERO */
-.hero{padding-top:calc(var(--nav-h) + 100px);padding-bottom:120px}
-.hero__eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
-.hero__headline{font-family:var(--font-display);font-size:clamp(60px,10vw,112px);font-weight:900;line-height:.92;letter-spacing:-.04em;color:var(--ink);margin-bottom:40px}
-.hero__headline em{font-style:italic;font-weight:300;color:var(--muted)}
-.hero__sub{font-size:18px;font-weight:400;line-height:1.6;color:var(--muted);max-width:560px;margin-bottom:56px}
-.hero__stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:64px;max-width:480px}
-.hero__stat{background:var(--cream);padding:28px 32px;text-align:center}
-.hero__stat-num{font-family:var(--font-display);font-size:48px;font-weight:900;letter-spacing:-.04em;color:var(--ink);line-height:1;margin-bottom:6px}
-.hero__stat-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-
-/* VIDEO */
-.video-section{padding:0 0 120px}
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;box-shadow:0 24px 80px rgba(25,25,25,.12),0 4px 16px rgba(25,25,25,.06);background:var(--ink)}
-.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
-
-/* SECTION PATTERN */
-.section-marker{display:flex;align-items:center;gap:16px;margin-bottom:48px}
-.section-marker__num{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);min-width:32px}
-.section-marker__rule{flex:1;height:1px;background:var(--rule)}
-.section-heading{font-family:var(--font-display);font-size:clamp(40px,7vw,80px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:var(--ink);margin-bottom:40px}
-.section-heading em{font-style:italic;font-weight:300}
-
-/* ABSTRACT */
-.abstract{padding:120px 0;border-top:1px solid var(--rule)}
-.abstract__lead{font-size:20px;font-weight:400;line-height:1.65;color:var(--charcoal);margin-bottom:32px}
-.abstract__body{font-size:17px;line-height:1.75;color:var(--charcoal);margin-bottom:24px}
-.abstract__blockquote{margin:56px 0;padding:0}
-.abstract__blockquote p{font-family:var(--font-display);font-size:clamp(36px,6vw,64px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink)}
-.abstract__blockquote p em{font-weight:300;font-style:italic;color:var(--muted)}
-.abstract__blockquote cite{display:block;margin-top:20px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-style:normal}
-.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:56px}
-.meta-cell{background:var(--white);padding:32px 36px}
-.meta-cell__label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-.meta-cell__title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px}
-.meta-cell p,.meta-cell li{font-size:14px;line-height:1.65;color:var(--charcoal)}
-.meta-cell li{padding-left:14px;position:relative;margin-bottom:4px}
-.meta-cell li::before{content:'—';position:absolute;left:0;color:var(--muted);font-size:11px}
-
-/* ARGUMENTS */
-.arguments{padding:120px 0;background:var(--ink);color:var(--cream)}
-.arguments .section-marker__rule{background:var(--rule-dark)}
-.arguments .section-marker__num{color:rgba(245,243,238,.4)}
-.arguments .section-heading{color:var(--cream)}
-.arguments .section-heading em{color:rgba(245,243,238,.35)}
-.arg-list{display:flex;flex-direction:column}
-.arg-item{display:grid;grid-template-columns:56px 1fr;gap:32px;padding:36px 0;border-bottom:1px solid var(--rule-dark);align-items:start}
-.arg-item:first-child{border-top:1px solid var(--rule-dark)}
-.arg-num{font-family:var(--font-display);font-size:13px;font-weight:300;font-style:italic;color:rgba(245,243,238,.3);padding-top:3px}
-.arg-content h3{font-family:var(--font-sans);font-size:17px;font-weight:700;color:var(--cream);letter-spacing:-.02em;margin-bottom:10px;line-height:1.35}
-.arg-content p{font-size:14px;line-height:1.7;color:rgba(245,243,238,.55)}
-.arg-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.arg-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,243,238,.35);border:1px solid rgba(245,243,238,.12);padding:4px 10px;border-radius:2px}
-
-/* DISTRIBUTION */
-.distribution{padding:120px 0;background:var(--cream-dark);border-top:1px solid var(--rule)}
-.tab-nav{display:flex;gap:0;border:1px solid var(--rule);background:var(--cream);width:fit-content}
-.tab-btn{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:12px 24px;color:var(--muted);border-right:1px solid var(--rule);transition:all .2s;background:transparent}
-.tab-btn:last-child{border-right:none}
-.tab-btn.active{background:var(--ink);color:var(--cream)}
-.tab-panels{border:1px solid var(--rule);background:var(--white);margin-top:-1px}
-.tab-panel{display:none;padding:48px}
-.tab-panel.active{display:block}
-.tab-panel__label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
-.tab-panel__hook{font-family:var(--font-display);font-size:clamp(28px,4vw,44px);font-weight:900;line-height:1.05;letter-spacing:-.03em;color:var(--ink);margin-bottom:32px}
-.tab-panel__hook em{font-style:italic;font-weight:300;color:var(--muted)}
-.channel-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:40px}
-.channel-cell{background:var(--cream);padding:28px 24px}
-.channel-cell__type{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.channel-cell h4{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em}
-.channel-cell p{font-size:13px;line-height:1.65;color:var(--charcoal)}
-.timeline{margin-top:48px}
-.timeline__row{display:grid;grid-template-columns:120px 1fr 1fr;gap:0;border-bottom:1px solid var(--rule);align-items:start}
-.timeline__row:first-child{border-top:1px solid var(--rule)}
-.timeline__cell{padding:18px 20px;font-size:13px;line-height:1.6;color:var(--charcoal);border-right:1px solid var(--rule)}
-.timeline__cell:last-child{border-right:none}
-.timeline__cell--week{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.timeline__row--head .timeline__cell{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--cream-dark)}
-
-/* LINKEDIN */
-.linkedin-section{padding:120px 0;border-top:1px solid var(--rule)}
-.phone-frame{width:320px;margin:0 auto;background:#1C1C1E;border-radius:44px;padding:14px;box-shadow:0 48px 120px rgba(25,25,25,.28),0 8px 24px rgba(25,25,25,.12),inset 0 0 0 1px rgba(255,255,255,.06);filter:grayscale(100%) opacity(.7);transition:filter .5s cubic-bezier(.16,1,.3,1)}
-.phone-frame:hover{filter:grayscale(0%) opacity(1)}
-.phone-screen{background:#EFF3F8;border-radius:32px;overflow:hidden}
-.phone-status{background:#EFF3F8;padding:12px 20px 4px;display:flex;justify-content:space-between;align-items:center}
-.phone-time{font-size:12px;font-weight:700;color:var(--ink);font-family:var(--font-sans)}
-.phone-icons{display:flex;gap:5px;align-items:center}
-.phone-icons svg{fill:var(--ink)}
-.li-feed{background:#EFF3F8;padding:0 10px 28px}
-.li-search{background:var(--white);border-radius:6px;padding:9px 12px;margin:8px 0 10px;font-size:12px;color:#888;display:flex;align-items:center;gap:6px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
-.li-post{background:var(--white);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.li-post__header{display:flex;align-items:flex-start;gap:10px;padding:14px 14px 10px}
-.li-avatar{width:42px;height:42px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 1.5px rgba(255,255,255,.15)}
-.li-avatar svg{width:42px;height:42px}
-.li-post__meta{flex:1;min-width:0}
-.li-post__name{font-size:13px;font-weight:700;color:#000e1a;letter-spacing:-.01em;line-height:1.2}
-.li-post__sub{font-size:11px;color:#666;line-height:1.3;margin-top:2px}
-.li-follow-btn{font-size:11px;font-weight:700;color:#0a66c2;background:none;border:1px solid #0a66c2;border-radius:12px;padding:3px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0}
-.li-post__body{padding:4px 14px 12px;font-size:12px;line-height:1.65;color:#1a1a1a}
-.li-post__body strong{font-weight:700}
-.li-post__body em{font-style:italic}
-.li-post__body p+p{margin-top:7px}
-.li-reactions{padding:8px 14px 6px;display:flex;justify-content:space-between;align-items:center}
-.li-reaction-count{font-size:10px;color:#666}
-.li-actions{display:flex;justify-content:space-around;padding:0 4px 8px;border-top:1px solid #e8e8e8;margin-top:2px;padding-top:4px}
-.li-action{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#666;padding:5px 4px;border-radius:3px;transition:background .15s}
-.li-action:hover{background:rgba(0,0,0,.05)}
-/* Stroke-based SVG icons for native fidelity */
-.li-action svg{width:14px;height:14px;fill:none;stroke:#666;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-/* Carousel desktop — strict 1:1 native LinkedIn ad aspect ratio */
-.carousel-desktop{border:1px solid var(--rule);background:var(--white);overflow:hidden;border-radius:6px;box-shadow:0 12px 48px rgba(25,25,25,.08),0 2px 8px rgba(25,25,25,.04);filter:grayscale(100%) opacity(.7);transition:filter .5s cubic-bezier(.16,1,.3,1)}
-.carousel-desktop:hover{filter:grayscale(0%) opacity(1)}
-.carousel-ad-top{background:var(--ink);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
-.carousel-ad-top span{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,243,238,.5)}
-.carousel-slides-wrap{position:relative;overflow:hidden;width:100%}
-.carousel-slides-wrap::before{content:'';display:block;padding-top:100%}
-.carousel-track{position:absolute;inset:0;display:flex;transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.carousel-slide{min-width:100%;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 40px;background:var(--cream);position:relative}
-.carousel-slide::before{content:attr(data-num);position:absolute;top:28px;right:36px;font-family:var(--font-display);font-size:80px;font-weight:900;color:rgba(25,25,25,.04);line-height:1;letter-spacing:-.05em;pointer-events:none}
-.cs-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.cs-headline{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:10px}
-.cs-headline em{font-style:italic;font-weight:300;color:var(--muted)}
-.cs-sub{font-size:13px;line-height:1.6;color:var(--muted);max-width:380px}
-.cs-big{font-family:var(--font-sans);font-weight:900;font-size:clamp(80px,11vw,120px);letter-spacing:-.06em;line-height:1;color:var(--ink);margin-bottom:8px}
-.carousel-controls{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--rule)}
-.carousel-arrows{display:flex;gap:8px}
-.carousel-arrow{width:32px;height:32px;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--charcoal);transition:all .2s;border-radius:2px}
-.carousel-arrow:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-.carousel-dots{display:flex;gap:6px;align-items:center}
-.c-dot{width:5px;height:5px;border-radius:50%;background:var(--rule);transition:all .25s}
-.c-dot.active{background:var(--ink);width:16px;border-radius:3px}
-.carousel-count{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.06em}
-.linkedin-grid{display:grid;grid-template-columns:340px 1fr;gap:48px;align-items:start;margin-top:56px}
-.linkedin-caption{margin-top:24px}
-.linkedin-caption h3{font-family:var(--font-sans);font-size:15px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
-.linkedin-caption p{font-size:13px;line-height:1.7;color:var(--muted)}
-
-/* ADS */
-.ads{padding:120px 0;background:var(--ink);color:var(--cream)}
-.ads .section-marker__rule{background:var(--rule-dark)}
-.ads .section-marker__num{color:rgba(245,243,238,.35)}
-.ads .section-heading{color:var(--cream)}
-.ads .section-heading em{color:rgba(245,243,238,.35)}
-.ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule-dark);border:1px solid var(--rule-dark);margin-top:56px}
-.ad-card{background:var(--ink);padding:48px 44px;transition:background .2s}
-.ad-card:hover{background:#1a1a1a}
-.ad-card__variant{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.3);margin-bottom:32px}
-.ad-card__headline{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:var(--cream);margin-bottom:24px}
-.ad-card__body{font-size:14px;line-height:1.7;color:rgba(245,243,238,.55);margin-bottom:28px}
-.ad-card__cta{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:13px 24px;background:var(--cream);color:var(--ink);border-radius:2px;transition:all .3s cubic-bezier(.16,1,.3,1)}
-.ad-card__cta:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.ad-card__rationale{margin-top:24px;padding-top:24px;border-top:1px solid var(--rule-dark);font-size:13px;font-style:italic;line-height:1.65;color:rgba(245,243,238,.35)}
-
-/* VISUAL DIRECTION */
-.visual-dir{padding:120px 0;border-top:1px solid var(--rule)}
-.vis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:56px}
-.vis-card{background:var(--white);padding:40px 44px}
-.vis-card__title{font-family:var(--font-sans);font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
-.vis-row{display:grid;grid-template-columns:72px 1fr;gap:16px;margin-bottom:18px;align-items:start}
-.vis-key{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:2px}
-.vis-val{font-size:13px;line-height:1.65;color:var(--charcoal)}
-
-/* CLOSING */
-.closing{padding:160px 0;background:var(--ink);text-align:center}
-.closing__quote{font-family:var(--font-display);font-size:clamp(40px,8vw,88px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:var(--cream);max-width:900px;margin:0 auto 40px}
-.closing__quote em{font-style:italic;font-weight:300;color:rgba(245,243,238,.4)}
-.closing__attr{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,243,238,.3)}
-
-/* CTA */
-.cta-section{padding:120px 0;border-top:1px solid var(--rule)}
-.cta-section__lead{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
-.cta-section h2{font-family:var(--font-display);font-size:clamp(40px,7vw,72px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:var(--ink);margin-bottom:48px}
-.cta-section h2 em{font-style:italic;font-weight:300}
-.cta-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:16px 28px;border-radius:2px;transition:all .3s cubic-bezier(.16,1,.3,1)}
-.btn--primary{background:var(--ink);color:var(--cream)}
-.btn--primary:hover{background:#333;transform:translateY(-2px);box-shadow:0 8px 32px rgba(25,25,25,.15)}
-.btn--outline{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-.btn--outline:hover{background:var(--ink);color:var(--cream);transform:translateY(-2px)}
-
-/* FOOTER */
-footer{border-top:1px solid var(--rule);padding:32px 0}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.footer-brand{font-size:12px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
-.footer-brand span{color:var(--muted);font-weight:400}
-.footer-meta{font-size:12px;color:var(--muted)}
-
-/* RESPONSIVE */
-@media(max-width:840px){
-  .hero__stats{grid-template-columns:1fr 1fr}
-  .meta-grid,.channel-grid,.linkedin-grid,.ad-grid,.vis-grid{grid-template-columns:1fr}
-  .timeline__row{grid-template-columns:80px 1fr}
-  .timeline__cell:last-child{display:none}
+/* ============================================================
+   RESET
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font);
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-@media(max-width:540px){
-  .hero__stats{grid-template-columns:1fr}
-  .arg-item{grid-template-columns:32px 1fr;gap:16px}
-  .phone-frame{width:280px}
-  .tab-panel{padding:28px 20px}
-  .vis-card,.ad-card{padding:28px 24px}
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ============================================================
+   LAYOUT
+============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
 }
+.container--wide {
+  width: 100%;
+  max-width: var(--wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.64s var(--ease), transform 0.64s var(--ease);
+}
+.reveal.on { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.07s; }
+.d2 { transition-delay: 0.14s; }
+.d3 { transition-delay: 0.21s; }
+.d4 { transition-delay: 0.28s; }
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 900;
+  background: rgba(245,243,238,0.93);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav__inner {
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.nav__brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav__logo  { height: 20px; width: auto; display: block; object-fit: contain; }
+.nav__byline { font-size: 12px; font-weight: 400; color: var(--muted); white-space: nowrap; }
+
+.nav__links { display: flex; gap: 28px; align-items: center; }
+.nav__links a {
+  position: relative;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--muted); letter-spacing: -0.01em;
+  padding-bottom: 2px;
+  transition: color 0.22s var(--ease);
+}
+.nav__links a::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 0;
+  width: 100%; height: 1px;
+  background: var(--ink);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.4s var(--ease);
+}
+.nav__links a:hover { color: var(--ink); }
+.nav__links a:hover::after { transform: scaleX(1); }
+
+.nav__burger {
+  display: none; flex-direction: column;
+  gap: 4.5px; padding: 4px; width: 28px;
+}
+.nav__burger span {
+  display: block; height: 1.5px;
+  background: var(--ink); transform-origin: center;
+  transition: transform 0.28s var(--ease), opacity 0.18s;
+}
+.nav__burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav__burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav__burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav__overlay {
+  position: fixed; inset: 0; top: var(--nav-h);
+  background: var(--cream); z-index: 800;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; gap: 32px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.28s var(--ease);
+}
+.nav__overlay.open { opacity: 1; pointer-events: auto; }
+.nav__overlay a {
+  font-size: clamp(28px,7vw,52px); font-weight: 800;
+  color: var(--ink); letter-spacing: -0.04em; line-height: 1.05;
+  transition: opacity 0.18s;
+}
+.nav__overlay a:hover { opacity: 0.3; }
+
+@media (max-width: 680px) {
+  .nav__links { display: none; }
+  .nav__burger { display: flex; }
+}
+
+/* ============================================================
+   SECTION SCAFFOLDING
+============================================================ */
+.section { padding: 120px 0; }
+.section--dark { background: var(--ink); color: var(--cream); }
+.section--alt  { background: var(--cream-alt); }
+
+.section-rule {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 48px;
+}
+.section-rule__label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+}
+.section--dark .section-rule__label { color: rgba(245,243,238,0.35); }
+.section-rule__line { flex: 1; height: 1px; background: var(--rule); }
+.section--dark .section-rule__line { background: var(--rule-dk); }
+
+/* ============================================================
+   TYPOGRAPHY — INTER 900
+============================================================ */
+.t-display {
+  font-weight: 900; line-height: 1.05;
+  letter-spacing: -0.04em; color: var(--ink);
+}
+.t-display--xl { font-size: clamp(56px,10vw,112px); }
+.t-display--lg { font-size: clamp(36px,6vw,72px); }
+.t-display--md { font-size: clamp(26px,4vw,48px); }
+.section--dark .t-display { color: var(--cream); }
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero { padding-top: calc(var(--nav-h) + 96px); padding-bottom: 96px; }
+.hero__kicker {
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 28px;
+}
+.hero__h1 {
+  font-weight: 900; letter-spacing: -0.045em;
+  line-height: 1.0; font-size: clamp(56px,10.5vw,116px);
+  color: var(--ink); margin-bottom: 32px;
+}
+.hero__h1 em { font-style: italic; font-weight: 300; color: var(--muted); }
+.hero__sub {
+  font-size: 18px; font-weight: 400; line-height: 1.6;
+  color: var(--muted); max-width: 520px; margin-bottom: 48px;
+}
+
+/* ============================================================
+   EXECUTIVE OVERVIEW BLOCK
+============================================================ */
+.exec-overview {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 36px 0 40px;
+  margin-bottom: 0;
+}
+.exec-overview__tracker {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.exec-overview__tracker::before {
+  content: '';
+  display: inline-block; width: 20px; height: 1px;
+  background: var(--muted);
+}
+.exec-overview__text {
+  font-size: 15.5px; font-weight: 400; line-height: 1.72;
+  color: var(--charcoal);
+  max-width: 680px;
+}
+
+/* ============================================================
+   VIDEO — FULL BLEED
+============================================================ */
+.video-section { padding-bottom: 0; }
+.video-outer { position: relative; width: 100%; }
+.video-wrap {
+  position: relative; width: 100%;
+  aspect-ratio: 16 / 9; overflow: hidden;
+  background: var(--ink);
+  box-shadow: 0 8px 32px rgba(17,17,17,0.10), 0 32px 80px rgba(17,17,17,0.12);
+}
+.video-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+.video-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; padding: 20px 24px;
+  pointer-events: none; z-index: 2;
+  transition: opacity 0.4s var(--ease);
+}
+.video-overlay.gone { opacity: 0; }
+.sound-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(17,17,17,0.70);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 100px;
+  padding: 8px 16px; font-size: 11.5px; font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  pointer-events: auto; cursor: pointer;
+  transition: background 0.2s;
+}
+.sound-pill:hover { background: rgba(17,17,17,0.9); }
+.sound-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ============================================================
+   ABSTRACT — immediate pull-up from video, zero gap
+============================================================ */
+.abstract { padding-top: 24px; }
+
+.abstract__lead {
+  font-size: 20px; font-weight: 400; line-height: 1.65;
+  color: var(--charcoal); margin-bottom: 28px;
+}
+.abstract__body {
+  font-size: 16.5px; line-height: 1.75;
+  color: var(--charcoal); margin-bottom: 22px;
+}
+.abstract__body strong { font-weight: 700; color: var(--ink); }
+.abstract__body em    { font-style: italic; }
+
+.abstract__blockquote { margin: 64px 0; }
+.abstract__blockquote p {
+  font-weight: 900; letter-spacing: -0.04em;
+  line-height: 1.05; color: var(--ink);
+  font-size: clamp(30px,5vw,58px);
+}
+.abstract__blockquote p em { font-style: italic; font-weight: 300; color: var(--muted); }
+.abstract__blockquote cite {
+  display: block; margin-top: 16px;
+  font-size: 10.5px; font-weight: 600;
+  font-style: normal; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* ============================================================
+   GLASS HOVER INSIGHT CARDS — Magnetic Focus
+============================================================ */
+.insight-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); margin-top: 56px;
+}
+.insight-card {
+  background: var(--white); padding: 32px 36px;
+  position: relative; overflow: hidden; cursor: default;
+  border: 1px solid transparent;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.insight-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(195,189,176,0.22) 0%,
+    rgba(160,155,144,0.13) 45%,
+    rgba(110,106,97,0.07) 100%);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none; z-index: 0;
+}
+.insight-card::after {
+  content: ''; position: absolute; inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(120,115,105,0.28);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none; z-index: 0;
+}
+.insight-card:hover::before { opacity: 1; }
+.insight-card:hover::after  { opacity: 1; }
+.insight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(17,17,17,0.08), 0 2px 8px rgba(17,17,17,0.04);
+  background: rgba(255,255,255,0.96);
+  border-color: rgba(180,175,165,0.3);
+}
+.insight-card > * { position: relative; z-index: 1; }
+.insight-card__label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+.insight-card__title {
+  font-size: 14px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.01em; margin-bottom: 8px;
+}
+.insight-card p, .insight-card li {
+  font-size: 13.5px; line-height: 1.65; color: var(--charcoal);
+}
+.insight-card li { position: relative; padding-left: 14px; margin-bottom: 4px; }
+.insight-card li::before { content: '-'; position: absolute; left: 0; color: var(--muted); }
+
+/* ============================================================
+   FIVE ARGUMENTS — dark
+============================================================ */
+.arguments { padding: 120px 0; }
+.arg-list { display: flex; flex-direction: column; }
+.arg-item {
+  display: grid; grid-template-columns: 44px 1fr;
+  gap: 24px; padding: 30px 0;
+  border-bottom: 1px solid var(--rule-dk); align-items: start;
+}
+.arg-item:first-child { border-top: 1px solid var(--rule-dk); }
+.arg-roman {
+  font-size: 11.5px; font-weight: 300; font-style: italic;
+  color: rgba(245,243,238,0.24); padding-top: 3px;
+}
+.arg-content h3 {
+  font-size: 15.5px; font-weight: 700; color: var(--cream);
+  letter-spacing: -0.02em; line-height: 1.35; margin-bottom: 8px;
+}
+.arg-content p { font-size: 13.5px; line-height: 1.7; color: rgba(245,243,238,0.46); }
+.arg-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 11px; }
+.arg-tag {
+  font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(245,243,238,0.26);
+  border: 1px solid rgba(245,243,238,0.1);
+  padding: 3px 9px; border-radius: 2px;
+}
+
+/* ============================================================
+   DISTRIBUTION — TABS
+============================================================ */
+.distribution { border-top: 1px solid var(--rule); }
+.tab-nav {
+  display: flex; border: 1px solid var(--rule);
+  background: var(--cream); width: fit-content;
+}
+.tab-btn {
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 11px 22px; color: var(--muted);
+  border-right: 1px solid var(--rule);
+  transition: all 0.2s var(--ease); background: transparent;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn[aria-selected="true"] { background: var(--ink); color: var(--cream); }
+.tab-btn:not([aria-selected="true"]):hover { color: var(--ink); }
+.tab-panels { border: 1px solid var(--rule); border-top: none; background: var(--white); }
+.tab-panel { display: none; padding: 48px 44px; }
+.tab-panel.active { display: block; }
+.tab-panel__eyebrow {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 18px;
+}
+.tab-panel__hook {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
+  color: var(--ink); font-size: clamp(22px,3.2vw,38px); margin-bottom: 36px;
+}
+.tab-panel__hook em { font-style: italic; font-weight: 300; color: var(--muted); }
+
+/* Focus-dimming on channel cells */
+.channel-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); margin-top: 32px;
+}
+.channel-row:hover .channel-cell { opacity: 0.38; }
+.channel-row .channel-cell:hover { opacity: 1 !important; }
+.channel-cell {
+  background: var(--cream); padding: 26px 22px;
+  transition: opacity 0.22s var(--ease);
+}
+.channel-cell__type {
+  font-size: 9.5px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--charcoal); margin-bottom: 9px;
+}
+.channel-cell h4 {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.3;
+}
+.channel-cell p { font-size: 12.5px; line-height: 1.65; color: var(--charcoal); }
+
+/* Executive Strategy Container — white card */
+.exec-strategy-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+.exec-strategy-card__body {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--charcoal);
+  max-width: 100%;
+}
+
+/* Channel execution matrix — 4-column spec 5 schema */
+.channel-matrix {
+  overflow-x: auto;
+  margin-bottom: 40px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(17,17,17,0.04);
+}
+.cmatrix-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px; line-height: 1.6;
+  background: var(--white);
+}
+.cmatrix-table th {
+  font-size: 9.5px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--charcoal); background: var(--cream-alt);
+  padding: 13px 18px; text-align: left;
+  border-bottom: 1.5px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  white-space: nowrap;
+}
+.cmatrix-table th:first-child { min-width: 200px; }
+.cmatrix-table th:nth-child(2) { min-width: 240px; }
+.cmatrix-table th:nth-child(3) { min-width: 220px; }
+.cmatrix-table th:last-child { border-right: none; min-width: 200px; }
+.cmatrix-table td {
+  padding: 16px 18px; color: var(--charcoal);
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  vertical-align: top;
+  font-size: 12.5px;
+  line-height: 1.62;
+}
+.cmatrix-table td:last-child { border-right: none; }
+.cmatrix-table tbody tr:last-child td { border-bottom: none; }
+.cmatrix-table tbody tr:hover td { background: rgba(245,243,238,0.7); }
+.cmatrix-table td strong { font-weight: 700; color: var(--ink); display: block; margin-bottom: 2px; }
+/* Sub-label under channel name */
+.cell-sub {
+  font-size: 10.5px; font-weight: 500;
+  color: var(--muted-lt); letter-spacing: 0.01em;
+  display: block; margin-top: 3px;
+}
+
+/* Intent badges — all accessible contrast */
+.intent-badge {
+  display: inline-block;
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 2px;
+  white-space: nowrap; margin-top: 8px;
+}
+.intent--high  { background: rgba(17,17,17,0.09); color: var(--charcoal); }
+.intent--med   { background: rgba(74,70,66,0.12);  color: var(--charcoal); }
+.intent--crit  { background: var(--ink); color: var(--cream); }
+
+/* Timeline */
+.timeline { margin-top: 36px; }
+.timeline__row {
+  display: grid; grid-template-columns: 96px 1fr 1fr;
+  border-bottom: 1px solid var(--rule); align-items: start;
+}
+.timeline__row:first-child { border-top: 1px solid var(--rule); }
+.timeline__row--head .timeline__cell {
+  font-size: 9.5px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--charcoal); background: var(--cream-alt);
+}
+.timeline__cell {
+  padding: 15px 17px; font-size: 12.5px;
+  line-height: 1.6; color: var(--charcoal);
+  border-right: 1px solid var(--rule);
+}
+.timeline__cell:last-child { border-right: none; }
+.timeline__cell--week {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+
+/* ============================================================
+   AIRPORT BILLBOARD — Aviation Tab
+============================================================ */
+.billboard-wrap {
+  position: relative; width: 100%;
+  min-height: 300px; border-radius: 10px;
+  overflow: hidden; display: flex;
+  align-items: center; justify-content: center;
+  margin-top: 32px;
+  /* INSERT AIRPORT PHOTO URL HERE */
+  background-image: url('/mnt/user-data/uploads/Banner_LinkedIn_Aeropuerto_con_Aviones.png');
+  background-size: cover; background-position: center;
+  background-color: #1a1f2c;
+}
+.billboard-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(8,10,16,0.62) 0%,
+    rgba(8,10,16,0.44) 40%,
+    rgba(8,10,16,0.72) 100%);
+  z-index: 0;
+}
+.billboard-content {
+  position: relative; z-index: 1;
+  text-align: center; padding: 52px 48px; width: 100%;
+}
+.billboard-content__eyebrow {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-bottom: 18px;
+}
+.billboard-content__headline {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
+  color: #FFFFFF; font-size: clamp(22px,3.5vw,42px);
+  margin-bottom: 28px; max-width: 640px;
+  margin-left: auto; margin-right: auto;
+}
+.billboard-content__headline em { font-style: italic; font-weight: 300; color: rgba(255,255,255,0.6); }
+.billboard-logo {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.billboard-logo img {
+  height: 24px; width: auto;
+  filter: brightness(0) invert(1); opacity: 0.9;
+}
+.billboard-content__tagline {
+  font-size: 13px; font-weight: 400;
+  color: rgba(255,255,255,0.5); margin-top: 6px;
+}
+
+/* ============================================================
+   LINKEDIN SECTION — iPhone 390×780 flagship mockup
+============================================================ */
+.linkedin-section { border-top: 1px solid var(--rule); }
+.linkedin-grid {
+  display: grid; grid-template-columns: 390px 1fr;
+  gap: 56px; align-items: start; margin-top: 56px;
+}
+
+/* ── Phone frame: exact 390×780px ── */
+.phone-wrap {
+  filter: grayscale(100%) opacity(0.68);
+  transition: filter 0.48s var(--ease);
+  width: 390px; flex-shrink: 0;
+}
+.phone-wrap:hover { filter: grayscale(0%) opacity(1); }
+.phone-frame {
+  background: #1A1A1C; border-radius: 52px; padding: 14px;
+  width: 390px; height: 780px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.07),
+    0 36px 90px rgba(0,0,0,0.32),
+    0 6px 20px rgba(0,0,0,0.18);
+  display: flex; flex-direction: column;
+  position: relative;
+}
+/* Dynamic Island */
+.phone-frame::before {
+  content: '';
+  position: absolute; top: 20px; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 34px;
+  background: #1A1A1C; border-radius: 20px; z-index: 10;
+}
+.phone-screen {
+  background: #EEF2F6; border-radius: 40px;
+  overflow: hidden; flex: 1;
+  display: flex; flex-direction: column;
+}
+/* Status bar — sits below Dynamic Island */
+.phone-status {
+  background: #EEF2F6; padding: 14px 20px 4px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-shrink: 0; margin-top: 20px;
+}
+.phone-status__time { font-size: 11.5px; font-weight: 700; color: #111; }
+.phone-status__icons { display: flex; gap: 5px; align-items: center; }
+.phone-status__icons svg { fill: #111; }
+
+/* Scrollable inner feed — hidden scrollbar */
+.li-feed {
+  background: #EEF2F6; padding: 6px 8px 32px;
+  flex: 1; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.li-feed::-webkit-scrollbar { display: none; }
+
+.li-searchbar {
+  background: #FFF; border-radius: 5px; padding: 8px 12px;
+  margin-bottom: 9px; font-size: 11.5px; color: #8a8a8a;
+  display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.li-post-card {
+  background: #FFF; border-radius: 9px; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.li-post-header { display: flex; align-items: flex-start; gap: 9px; padding: 13px 13px 8px; }
+.li-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  flex-shrink: 0; overflow: hidden; background: #111;
+  display: flex; align-items: center; justify-content: center;
+}
+.li-avatar img { width: 100%; height: 100%; object-fit: contain; padding: 6px; background: #fff; }
+.li-post-meta { flex: 1; min-width: 0; }
+.li-post-name { font-size: 12.5px; font-weight: 700; color: #000d1a; letter-spacing: -0.01em; line-height: 1.2; }
+.li-post-sub  { font-size: 10.5px; color: #666; line-height: 1.3; margin-top: 1px; }
+.li-follow-btn {
+  font-size: 10.5px; font-weight: 700; color: #0a66c2;
+  border: 1.5px solid #0a66c2; border-radius: 14px;
+  padding: 3px 11px; white-space: nowrap; flex-shrink: 0;
+  background: transparent; cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.li-follow-btn:hover { background: #0a66c2; color: #fff; }
+.li-post-body { padding: 2px 13px 11px; font-size: 11.5px; line-height: 1.62; color: #1a1a1a; }
+.li-post-body strong { font-weight: 700; }
+.li-post-body p + p   { margin-top: 6px; }
+.li-post-body em      { font-style: italic; }
+.li-reactions {
+  padding: 6px 13px 5px; border-top: 1px solid #e5e5e5;
+  font-size: 10px; color: #666;
+  display: flex; justify-content: space-between;
+}
+.li-actions { display: flex; border-top: 1px solid #e5e5e5; padding: 1px 4px 8px; }
+.li-action {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: 3px; padding: 6px 2px; font-size: 10px; font-weight: 600;
+  color: #555; border-radius: 3px; transition: background 0.14s; cursor: pointer;
+}
+.li-action:hover { background: rgba(0,0,0,0.04); }
+.li-action svg {
+  width: 13px; height: 13px;
+  fill: none; stroke: #555;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ============================================================
+   CAROUSEL — Technical Clean / Silicon Valley
+============================================================ */
+/* Meta badge */
+.carousel-meta-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink); background: var(--cream-alt);
+  border: 1px solid var(--rule);
+  padding: 5px 12px; border-radius: 2px;
+  margin-bottom: 12px;
+}
+.carousel-meta-badge svg { width: 6px; height: 6px; flex-shrink: 0; }
+
+.carousel-wrap {
+  filter: grayscale(100%) opacity(0.68);
+  transition: filter 0.48s var(--ease);
+}
+.carousel-wrap:hover { filter: grayscale(0%) opacity(1); }
+.carousel-frame {
+  border: 1px solid var(--rule); border-radius: 5px;
+  overflow: hidden; background: var(--white);
+  box-shadow: 0 3px 20px rgba(17,17,17,0.06);
+}
+.carousel-topbar {
+  background: var(--ink); padding: 9px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.carousel-topbar span {
+  font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(245,243,238,0.42);
+}
+.carousel-slides-container {
+  position: relative; width: 100%; overflow: hidden;
+}
+.carousel-slides-container::before { content: ''; display: block; padding-top: 100%; }
+.carousel-track {
+  position: absolute; inset: 0; display: flex;
+  transition: transform 0.42s var(--ease);
+}
+/* All slides: content fully centered */
+.carousel-slide {
+  min-width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 36px 40px; position: relative; overflow: hidden;
+}
+
+/* Slide 1: Cream/off-white cover — massive centered hook */
+.slide--cover {
+  background: var(--cream);
+}
+.slide--cover .slide-kicker {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+}
+.slide--cover .slide-cover-headline {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.0;
+  color: var(--ink); font-size: clamp(28px,4.5vw,52px);
+  max-width: 380px;
+}
+.slide--cover .slide-cover-headline em {
+  font-style: italic; font-weight: 300; color: var(--muted);
+}
+
+/* Slide 2: Terminal / dashboard — dark */
+.slide--dashboard {
+  background: #0D1117;
+  justify-content: flex-start; align-items: flex-start;
+  text-align: left; padding-top: 28px;
+}
+.terminal-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 14px;
+}
+.terminal-dot { width: 8px; height: 8px; border-radius: 50%; }
+.td-r { background: #ff5f57; }
+.td-y { background: #febc2e; }
+.td-g { background: #28c840; }
+.terminal-title {
+  font-size: 9.5px; font-weight: 600;
+  color: rgba(255,255,255,0.3); letter-spacing: 0.1em;
+  margin-left: 6px; text-transform: uppercase;
+}
+.log-lines { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+.log-line {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+  font-size: 10.5px; line-height: 1.4;
+}
+.log-time { color: rgba(255,255,255,0.28); margin-right: 8px; }
+.log-ok   { color: #3fb950; }
+.log-warn { color: #d29922; }
+.log-info { color: #58a6ff; }
+.log-err  { color: #f85149; }
+.slide--dashboard .slide-label-dk {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.28); margin-top: 16px;
+}
+
+/* Slide 3: Light metric — centered */
+.slide--light { background: var(--cream-alt); }
+.slide-label {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.slide-metric {
+  font-weight: 900; letter-spacing: -0.06em;
+  font-size: clamp(72px,11vw,108px);
+  color: var(--ink); line-height: 1; margin-bottom: 10px;
+}
+.slide-metric-sub {
+  font-size: 11.5px; font-weight: 500;
+  color: var(--muted); letter-spacing: -0.01em; line-height: 1.5;
+  max-width: 260px;
+}
+
+/* Slide 4: Progress dashboard — centered */
+.slide--progress {
+  background: #F8F7F4;
+  justify-content: center; align-items: stretch;
+  padding: 32px 40px; text-align: left;
+}
+.progress-block { margin-bottom: 16px; }
+.progress-label {
+  font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+  display: flex; justify-content: space-between;
+}
+.progress-track {
+  width: 100%; height: 5px;
+  background: var(--rule); border-radius: 100px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 100px; background: var(--ink);
+  animation: fillBar 1.2s var(--ease) forwards; width: 0;
+}
+@keyframes fillBar { to { width: var(--w); } }
+.slide--progress .slide-footer-label {
+  font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-top: 12px;
+}
+
+/* Slide 5: Dark CTA — centered */
+.slide--dark { background: var(--ink); }
+.slide--dark .slide-label  { color: rgba(245,243,238,0.32); }
+.slide-headline {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
+  color: var(--cream); font-size: clamp(22px,3.2vw,36px);
+  margin-bottom: 12px; max-width: 320px;
+}
+.slide-headline em { font-style: italic; font-weight: 300; color: rgba(245,243,238,0.55); }
+.slide-body { font-size: 12.5px; line-height: 1.6; color: rgba(245,243,238,0.5); max-width: 280px; }
+
+/* Ghost slide number watermark */
+.carousel-slide::after {
+  content: attr(data-n);
+  position: absolute; top: 18px; right: 24px;
+  font-size: 60px; font-weight: 900; letter-spacing: -0.05em;
+  color: rgba(17,17,17,0.035); line-height: 1;
+  pointer-events: none;
+}
+.slide--dark::after      { color: rgba(255,255,255,0.04); }
+.slide--dashboard::after { color: rgba(255,255,255,0.03); }
+
+.carousel-controls {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px; border-top: 1px solid var(--rule);
+}
+.carousel-arrows { display: flex; gap: 6px; }
+.carousel-arrow {
+  width: 29px; height: 29px; border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--charcoal); border-radius: 2px;
+  transition: all 0.18s var(--ease);
+}
+.carousel-arrow:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.carousel-dots { display: flex; gap: 5px; align-items: center; }
+.c-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--rule); transition: all 0.22s var(--ease);
+}
+.c-dot.on { background: var(--ink); width: 14px; border-radius: 3px; }
+.carousel-count { font-size: 10.5px; font-weight: 600; color: var(--muted); }
+
+.li-caption { margin-top: 18px; }
+.li-caption h3 { font-size: 13.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 5px; }
+.li-caption p  { font-size: 12.5px; line-height: 1.65; color: var(--muted); }
+
+/* ============================================================
+   AD COPY — dark
+============================================================ */
+.ads { padding: 120px 0; }
+.ads-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rule-dk);
+  border: 1px solid var(--rule-dk); margin-top: 52px;
+}
+.ad-card { background: var(--ink); padding: 46px 42px; transition: background 0.2s var(--ease); }
+.ad-card:hover { background: #181818; }
+.ad-card__variant {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(245,243,238,0.26); margin-bottom: 26px;
+}
+.ad-card__headline {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
+  color: var(--cream); font-size: clamp(26px,3.5vw,46px); margin-bottom: 18px;
+}
+.ad-card__body {
+  font-size: 13.5px; line-height: 1.7;
+  color: rgba(245,243,238,0.5); margin-bottom: 24px;
+}
+.ad-card__cta {
+  display: inline-block; font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 12px 22px; background: var(--cream);
+  color: var(--ink); border-radius: 2px; transition: all 0.3s var(--ease);
+}
+.ad-card__cta:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.26); }
+.ad-card__note {
+  margin-top: 20px; padding-top: 18px;
+  border-top: 1px solid var(--rule-dk);
+  font-size: 12px; font-style: italic;
+  line-height: 1.65; color: rgba(245,243,238,0.28);
+}
+.vis-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rule-dk);
+  border: 1px solid var(--rule-dk); margin-top: 28px;
+}
+.vis-card { background: var(--ink); padding: 34px 38px; }
+.vis-card__title {
+  font-size: 13px; font-weight: 800; color: var(--cream);
+  letter-spacing: -0.02em; margin-bottom: 22px;
+  padding-bottom: 13px; border-bottom: 1px solid var(--rule-dk);
+}
+.vis-row { display: grid; grid-template-columns: 60px 1fr; gap: 12px; margin-bottom: 13px; align-items: start; }
+.vis-key { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,243,238,0.28); padding-top: 2px; }
+.vis-val { font-size: 12.5px; line-height: 1.65; color: rgba(245,243,238,0.52); }
+
+/* ============================================================
+   CLOSING STATEMENT
+============================================================ */
+.closing { padding: 152px 0; text-align: center; }
+.closing blockquote {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.02;
+  color: var(--cream); font-size: clamp(34px,6.5vw,78px);
+  max-width: 820px; margin: 0 auto 26px;
+}
+.closing blockquote em { font-style: italic; font-weight: 300; color: rgba(245,243,238,0.36); }
+.closing cite {
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(245,243,238,0.26); font-style: normal;
+}
+
+/* ============================================================
+   CTA SECTION
+============================================================ */
+.cta-section { border-top: 1px solid var(--rule); }
+.cta-section__lead {
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 18px;
+}
+.cta-section h2 {
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
+  color: var(--ink); font-size: clamp(32px,5vw,60px); margin-bottom: 36px;
+}
+.cta-section h2 em { font-style: italic; font-weight: 300; }
+.btn-row { display: flex; gap: 9px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 13px 24px; border-radius: 2px; transition: all 0.3s var(--ease);
+}
+.btn--primary { background: var(--ink); color: var(--cream); }
+.btn--primary:hover { background: #2a2a2a; transform: translateY(-2px); box-shadow: 0 5px 20px rgba(17,17,17,0.16); }
+.btn--ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn--ghost:hover { background: var(--ink); color: var(--cream); transform: translateY(-2px); }
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.site-footer { border-top: 1px solid var(--rule); padding: 28px 0; }
+.footer-inner {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-brand { font-size: 12px; font-weight: 600; color: var(--ink); }
+.footer-brand span { color: var(--muted); font-weight: 400; }
+.footer-meta { font-size: 11.5px; color: var(--muted); }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 960px) {
+  .linkedin-grid { grid-template-columns: 1fr; }
+  .phone-wrap, .phone-frame { width: 100%; max-width: 390px; }
+  .phone-frame { height: 680px; }
+}
+@media (max-width: 860px) {
+  .insight-grid   { grid-template-columns: 1fr; }
+  .ads-grid, .vis-grid { grid-template-columns: 1fr; }
+  .channel-row    { grid-template-columns: 1fr; }
+  .timeline__row  { grid-template-columns: 76px 1fr; }
+  .timeline__cell:last-child { display: none; }
+}
+@media (max-width: 540px) {
+  .section  { padding: 80px 0; }
+  .tab-panel { padding: 28px 18px; }
+  .ad-card  { padding: 30px 22px; }
+  .vis-card { padding: 26px 20px; }
+  .hero__meta { width: 100%; }
+  .phone-frame { height: 600px; border-radius: 42px; }
+}
+
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav" role="navigation">
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
     <a href="#hero" class="nav__brand" aria-label="HappyRobot — Sara Diaz Content Case Study">
-      <!-- HappyRobot wordmark SVG -->
-      <svg class="nav__logo" viewBox="0 0 148 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Robot head icon mark -->
-        <rect x="0" y="3" width="16" height="13" rx="2" stroke="#111111" stroke-width="1.5"/>
-        <rect x="3" y="7" width="3" height="3" rx="1" fill="#111111"/>
-        <rect x="10" y="7" width="3" height="3" rx="1" fill="#111111"/>
-        <rect x="5" y="12" width="6" height="1.5" rx=".75" fill="#111111"/>
-        <rect x="6.5" y="0" width="3" height="3.5" rx="1" fill="#111111"/>
-        <!-- Wordmark: HappyRobot -->
-        <text x="22" y="16" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="13" letter-spacing="-0.3" fill="#111111">HappyRobot</text>
-        <!-- Separator + byline -->
-        <text x="107" y="16" font-family="Inter,system-ui,sans-serif" font-weight="400" font-size="12" fill="#7A7672"> — Sara Diaz</text>
-      </svg>
+      <img src="/mnt/user-data/uploads/happyrobot_-_full_logo_-_black.png" alt="HappyRobot" class="nav__logo" />
+      <span class="nav__byline">Sara Diaz</span>
     </a>
-    <ul class="nav__links">
-      <li><a href="#abstract">01 Blog</a></li>
+    <ul class="nav__links" role="list">
+      <li><a href="#abstract">01 Abstract</a></li>
       <li><a href="#distribution">02 Distribution</a></li>
       <li><a href="#linkedin">03 LinkedIn</a></li>
       <li><a href="#ads">04 Ads</a></li>
@@ -288,329 +1049,773 @@ footer{border-top:1px solid var(--rule);padding:32px 0}
   </div>
 </nav>
 <div class="nav__overlay" id="js-overlay" aria-hidden="true">
-  <a href="#abstract" class="js-close-nav">01 — Blog</a>
-  <a href="#distribution" class="js-close-nav">02 — Distribution</a>
-  <a href="#linkedin" class="js-close-nav">03 — LinkedIn</a>
-  <a href="#ads" class="js-close-nav">04 — Ads</a>
+  <a href="#abstract"     class="js-close">01 Abstract</a>
+  <a href="#distribution" class="js-close">02 Distribution</a>
+  <a href="#linkedin"     class="js-close">03 LinkedIn</a>
+  <a href="#ads"          class="js-close">04 Ads</a>
 </div>
 
-<!-- HERO -->
+<!-- ============================================================
+     HERO
+============================================================ -->
 <section id="hero" class="hero">
   <div class="container">
-    <p class="hero__eyebrow reveal">Content Marketing Case Study · HappyRobot Inc. · 2026</p>
-    <h1 class="hero__headline reveal reveal-delay-1">Forged<br><em>in Fire.</em></h1>
-    <p class="hero__sub reveal reveal-delay-2">Master Narrative & Distribution Framework —<br>AI Workforce Infrastructure</p>
-    <div class="hero__stats reveal reveal-delay-3">
-      <div class="hero__stat"><div class="hero__stat-num">4</div><div class="hero__stat-label">Deliverables</div></div>
-      <div class="hero__stat"><div class="hero__stat-num">2</div><div class="hero__stat-label">Verticals Proven</div></div>
-    </div>
+    <p class="hero__kicker reveal">Content Marketing Case Study · HappyRobot Inc. · 2026</p>
+    <h1 class="hero__h1 reveal d1">Forged<br><em>in Fire.</em></h1>
+    <p class="hero__sub reveal d2">Master Narrative and Distribution Framework for AI Workforce Infrastructure</p>
   </div>
 </section>
 
-<!-- VIDEO -->
+<!-- ============================================================
+     VIDEO — FULL BLEED, no separator below
+============================================================ -->
 <div class="video-section">
-  <div class="container">
-    <div class="video-wrap reveal">
-      <iframe src="https://www.youtube.com/embed/E9XBbT9eN9E?rel=0&modestbranding=1&color=white&iv_load_policy=3&controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="HappyRobot — Forged in Fire" loading="lazy"></iframe>
+  <div class="video-outer reveal">
+    <div class="video-wrap">
+      <!-- mute=0, controls=1 — audio fully native, no forced mute -->
+      <iframe
+        src="https://www.youtube.com/embed/E9XBbT9eN9E?rel=0&modestbranding=1&color=white&iv_load_policy=3&controls=1&mute=0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen title="HappyRobot — Forged in Fire" loading="lazy"
+      ></iframe>
+    </div>
+    <div class="video-overlay" id="js-vid-overlay">
+      <button class="sound-pill" id="js-vid-dismiss">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        Click to play with sound
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ABSTRACT -->
-<section id="abstract" class="abstract">
+<!-- ============================================================
+     ABSTRACT — tight pull-up from video, no divider line
+============================================================ -->
+<section id="abstract" class="abstract section">
   <div class="container">
-    <div class="section-marker reveal"><span class="section-marker__num">01</span><div class="section-marker__rule"></div></div>
-    <h2 class="section-heading reveal">Blog Post<br><em>Abstract</em></h2>
-    <p class="abstract__lead reveal">Most enterprises don't deploy AI into their operations. They deploy AI into a <em>demo</em> of their operations — clean data, controlled exceptions, favorable conditions. Then production begins.</p>
-    <p class="abstract__body reveal">The driver doesn't answer. The legacy system drops the feed. Three workflows collide at 2 AM and the escalation path leads to a human who is asleep.</p>
+
+    <div class="section-rule reveal">
+      <span class="section-rule__label">01 Blog Abstract</span>
+      <div class="section-rule__line"></div>
+    </div>
+
+    <h2 class="t-display t-display--lg reveal" style="margin-bottom:48px;">
+      The Infrastructure<br>That Survived<br>the Fire
+    </h2>
+
+    <p class="abstract__lead reveal">
+      Most enterprises don't deploy AI into their operations. They deploy AI into a <em>demo</em> of their operations. Clean data. Controlled exceptions. A vendor who arrived with a slide deck calibrated to pass. Then production begins.
+    </p>
+    <p class="abstract__body reveal">
+      The driver doesn't answer. The legacy system drops the feed. Three workflows collide at 2 AM and the escalation path leads to a human who is asleep.
+    </p>
+
     <blockquote class="abstract__blockquote reveal">
       <p>This is not an<br>edge case.<br><em>This is Tuesday.</em></p>
-      <cite>— The Infrastructure That Survived the Fire · HappyRobot Blog · 2026</cite>
+      <cite>The Infrastructure That Survived the Fire · HappyRobot · 2026</cite>
     </blockquote>
-    <p class="abstract__body reveal">The question executives are not asking their AI vendors — but should be — is not "what can your system do?" It is <strong>"what has your system already survived?"</strong></p>
-    <p class="abstract__body reveal">HappyRobot's AI workforce infrastructure was not introduced to this class of operational complexity. It was built inside it — forged in global logistics, where margins are razor-thin, legacy systems don't speak to each other, and a single missed handoff is a P&L event before noon. That operational origin is not a marketing credential. It is a <strong>structural guarantee.</strong></p>
-    <div class="meta-grid reveal">
-      <div class="meta-cell"><div class="meta-cell__label">Strategic Takeaway</div><div class="meta-cell__title">Operational Provenance</div><p>Where was the infrastructure built and what did it survive? A new lens for every future vendor evaluation.</p></div>
-      <div class="meta-cell"><div class="meta-cell__label">Target Audience</div><ul><li>COOs, CDOs, VPs of Operations at $1B+ enterprises</li><li>Operators in airlines, financial services, utilities, retail</li><li>Executives accountable when AI breaks production</li></ul></div>
-      <div class="meta-cell"><div class="meta-cell__label">Intellectual Tension</div><p>Infrastructure built for optimal conditions vs. one forged under adversarial ones. Resolved not with comfort — but with a choice.</p></div>
-      <div class="meta-cell"><div class="meta-cell__label">The Hook</div><p>The exact moment every enterprise AI deployment reveals its flaw — not in the demo, but on the first Tuesday when actual operations meet the system.</p></div>
+
+    <p class="abstract__body reveal">
+      The question executives are not asking their AI vendors, but should be, is not "what can your system do?" It is <strong>"what has your system already survived?"</strong>
+    </p>
+    <p class="abstract__body reveal">
+      HappyRobot's AI workforce infrastructure was not introduced to this class of operational complexity. It was built inside it. Forged in global logistics, where margins are razor-thin, legacy systems don't speak to each other, and a single missed handoff is a P&L event before noon. That operational origin is not a marketing credential. It is a <strong>structural guarantee.</strong>
+    </p>
+
+    <!-- GLASS HOVER INSIGHT CARDS -->
+    <div class="insight-grid reveal">
+      <div class="insight-card">
+        <div class="insight-card__label">Strategic Takeaway</div>
+        <div class="insight-card__title">Operational Provenance</div>
+        <p>Where was the infrastructure built and what did it survive? A new lens for every future vendor evaluation.</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-card__label">Target Audience</div>
+        <ul>
+          <li>COOs, CDOs, VPs of Operations at $1B+ enterprises</li>
+          <li>Operators in airlines, financial services, retail, utilities</li>
+          <li>Executives accountable when AI breaks production</li>
+        </ul>
+      </div>
+      <div class="insight-card">
+        <div class="insight-card__label">Intellectual Tension</div>
+        <p>Infrastructure built for optimal conditions versus one forged under adversarial ones. Resolved not with comfort, but with a choice.</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-card__label">The Hook</div>
+        <p>The exact moment every enterprise AI deployment reveals its flaw. Not in the demo, but on the first Tuesday when actual operations meet the system.</p>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- FIVE ARGUMENTS -->
-<section class="arguments">
+<!-- ============================================================
+     FIVE ARGUMENTS — dark
+============================================================ -->
+<section class="arguments section section--dark">
   <div class="container">
-    <div class="section-marker reveal"><span class="section-marker__num">01–C</span><div class="section-marker__rule"></div></div>
-    <h2 class="section-heading reveal">Five<br><em>Arguments.</em></h2>
-    <ol class="arg-list" role="list">
-      <li class="arg-item reveal"><div class="arg-num">I</div><div class="arg-content"><h3>You Haven't Built Automation. You've Built a Suggestion Box.</h3><p>Three production failure modes: silent degradation, exception collapse, legacy fragmentation. If the architecture was never designed to survive without the human fallback, what happens when the enterprise finally removes it?</p><div class="arg-tags"><span class="arg-tag">Silent Degradation</span><span class="arg-tag">Exception Collapse</span><span class="arg-tag">Legacy Fragmentation</span></div></div></li>
-      <li class="arg-item reveal reveal-delay-1"><div class="arg-num">II</div><div class="arg-content"><h3>Tuesday Is Not an Edge Case.</h3><p>Four structural conditions every $1B+ enterprise runs simultaneously: legacy fragmentation, exception density, real-time SLA pressure, zero tolerance for silent failure.</p><div class="arg-tags"><span class="arg-tag">SLA Pressure</span><span class="arg-tag">Zero Silent Failure</span><span class="arg-tag">$1B+ Enterprise</span></div></div></li>
-      <li class="arg-item reveal reveal-delay-2"><div class="arg-num">III</div><div class="arg-content"><h3>What the Fire Actually Teaches.</h3><p>Logistics is the definitive stress environment. Aviation, financial services, and retail share identical structural failure modes expressed in different operational vocabularies.</p><div class="arg-tags"><span class="arg-tag">Aviation</span><span class="arg-tag">Financial Services</span><span class="arg-tag">Cross-Vertical</span></div></div></li>
-      <li class="arg-item reveal reveal-delay-3"><div class="arg-num">IV</div><div class="arg-content"><h3>The Proof Is Not a Benchmark.</h3><p>DHL: global multi-region deployment at scale. U.S. Xpress: 75% autonomous resolution on critical workflows. Results produced inside the pressure, not a controlled environment.</p><div class="arg-tags"><span class="arg-tag">DHL — Global Scale</span><span class="arg-tag">U.S. Xpress 75%</span><span class="arg-tag">Production Record</span></div></div></li>
-      <li class="arg-item reveal reveal-delay-4"><div class="arg-num">V</div><div class="arg-content"><h3>Two Types of AI Infrastructure Now Exist.</h3><p>Type One: built in controlled environments, fails under production load. Type Two: forged in adversarial conditions, architected for the Tuesday where everything goes wrong. The fire wasn't the obstacle. It was the qualification.</p><div class="arg-tags"><span class="arg-tag">Type One vs Two</span><span class="arg-tag">Adversarial Architecture</span><span class="arg-tag">Category Definition</span></div></div></li>
+
+    <div class="section-rule reveal">
+      <span class="section-rule__label">01-C Structural Outline</span>
+      <div class="section-rule__line"></div>
+    </div>
+
+    <h2 class="t-display t-display--lg reveal" style="color:var(--cream);margin-bottom:52px;">
+      Five <em style="font-weight:300;font-style:italic;color:rgba(245,243,238,.3);">Arguments.</em>
+    </h2>
+
+    <ol class="arg-list">
+      <li class="arg-item reveal">
+        <span class="arg-roman">I</span>
+        <div class="arg-content">
+          <h3>You Haven't Built Automation. You've Built a Suggestion Box.</h3>
+          <p>Three production failure modes: silent degradation, exception collapse, legacy fragmentation. If the architecture was never designed to survive without the human fallback, what happens when the enterprise finally removes it?</p>
+          <div class="arg-tags"><span class="arg-tag">Silent Degradation</span><span class="arg-tag">Exception Collapse</span><span class="arg-tag">Legacy Fragmentation</span></div>
+        </div>
+      </li>
+      <li class="arg-item reveal d1">
+        <span class="arg-roman">II</span>
+        <div class="arg-content">
+          <h3>Tuesday Is Not an Edge Case.</h3>
+          <p>Four structural conditions every $1B+ enterprise runs simultaneously: legacy fragmentation, exception density, real-time SLA pressure, zero tolerance for silent failure. Every executive recognizes their own operations.</p>
+          <div class="arg-tags"><span class="arg-tag">SLA Pressure</span><span class="arg-tag">Zero Silent Failure</span><span class="arg-tag">$1B+ Enterprise</span></div>
+        </div>
+      </li>
+      <li class="arg-item reveal d2">
+        <span class="arg-roman">III</span>
+        <div class="arg-content">
+          <h3>What the Fire Actually Teaches.</h3>
+          <p>Logistics is the definitive stress environment. Aviation, financial services, and retail share identical structural failure modes in different operational vocabularies. The infrastructure doesn't need to be re-proven. It needs to be re-deployed.</p>
+          <div class="arg-tags"><span class="arg-tag">Aviation</span><span class="arg-tag">Financial Services</span><span class="arg-tag">Cross-Vertical</span></div>
+        </div>
+      </li>
+      <li class="arg-item reveal d3">
+        <span class="arg-roman">IV</span>
+        <div class="arg-content">
+          <h3>The Proof Is Not a Benchmark.</h3>
+          <p>DHL: global multi-region deployment at scale. U.S. Xpress: 75% autonomous resolution on critical workflows. Results produced inside the pressure, not a controlled environment. The architecture travels. The production record comes with it.</p>
+          <div class="arg-tags"><span class="arg-tag">DHL Global Scale</span><span class="arg-tag">U.S. Xpress 75%</span><span class="arg-tag">Production Record</span></div>
+        </div>
+      </li>
+      <li class="arg-item reveal d4">
+        <span class="arg-roman">V</span>
+        <div class="arg-content">
+          <h3>Two Types of AI Infrastructure Now Exist.</h3>
+          <p>Type One: built in controlled environments, fails under production load. Type Two: forged in adversarial conditions, architected for the Tuesday where everything goes wrong. The fire wasn't the obstacle. It was the qualification.</p>
+          <div class="arg-tags"><span class="arg-tag">Type One vs Two</span><span class="arg-tag">Adversarial Architecture</span><span class="arg-tag">Category Definition</span></div>
+        </div>
+      </li>
     </ol>
   </div>
 </section>
 
-<!-- DISTRIBUTION -->
-<section id="distribution" class="distribution">
+<!-- ============================================================
+     DISTRIBUTION — WAI-ARIA TABS
+============================================================ -->
+<section id="distribution" class="distribution section section--alt">
   <div class="container">
-    <div class="section-marker reveal"><span class="section-marker__num">02</span><div class="section-marker__rule"></div></div>
-    <h2 class="section-heading reveal">Channel<br><em>Distribution</em></h2>
-    <p class="abstract__body reveal" style="margin-bottom:40px">The blog post is the hub. Every channel drives the right executive into it through the right format at the right moment. One thesis. Five touchpoints. Six weeks.</p>
+
+    <div class="section-rule reveal">
+      <span class="section-rule__label">02 Channel Distribution</span>
+      <div class="section-rule__line"></div>
+    </div>
+
+    <h2 class="t-display t-display--lg reveal" style="margin-bottom:14px;">
+      Hub and <em style="font-style:italic;font-weight:300;">Spoke.</em>
+    </h2>
+    <p class="reveal" style="font-size:17px;color:var(--muted);max-width:520px;margin-bottom:32px;line-height:1.65;">
+      The blog post is the hub. Every channel drives the right executive into it through the right format at the right moment. One thesis. Five touchpoints. Six weeks.
+    </p>
+
+    <!-- Executive Strategy Container — white card, no meta-label -->
+    <div class="exec-strategy-card reveal">
+      <p class="exec-strategy-card__body">
+        A master narrative is meaningless without structural distribution. We weaponize LinkedIn as the organic and paid ABM core to intercept enterprise decision-makers at the exact moment they are evaluating operational risk. Simultaneously, Out-Of-Home assets deployed inside Tier-1 airport terminals, Dallas, Miami, and JFK, capture aviation and logistics executives when operational delays are physically occurring around them. Physical placement becomes a high-intent conversion trigger. The result is a six-week compounding flywheel: organic trust, paid precision, and environmental priming converge on a single ungated asset, the blog post, which does the closing work.
+      </p>
+    </div>
+
+    <!-- Rebuilt 4-column data matrix — spec 5 schema -->
+    <div class="channel-matrix reveal">
+      <table class="cmatrix-table">
+        <thead>
+          <tr>
+            <th>Channel / Metric</th>
+            <th>Strategic Rationale &amp; Intent Level</th>
+            <th>Target Efficiency / CAC Impact</th>
+            <th>Friction Point Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>LinkedIn Founders Post</strong><br><span class="cell-sub">Organic · Long-form narrative</span></td>
+            <td>Lateral authority transfer. Founders' voice bypasses marketing-aversion filters in C-suite buyers. Ends on unresolved tension to pull readers into the blog hub.<br><span class="intent-badge intent--high">High Intent</span></td>
+            <td>Near-zero distribution cost. Owned audience with zero platform fee. Compounding impressions through comments and reshares extend reach without incremental spend.</td>
+            <td>Algorithm reach ceiling mitigated by simultaneous ABM paid activation during the same launch window, ensuring total addressable audience is captured regardless of organic ranking.</td>
+          </tr>
+          <tr>
+            <td><strong>LinkedIn ABM Paid</strong><br><span class="cell-sub">Sponsored · Single image + carousel</span></td>
+            <td>Precision targeting of named T1 enterprise accounts by job title and seniority. Vertical-specific headline vocabulary triggers instant operational recognition before the body copy runs.<br><span class="intent-badge intent--high">High Intent</span></td>
+            <td>$28–$55 per qualified lead on T1 enterprise accounts. Carousel format drives 30–40% higher engagement vs. single image at equivalent CPM. CAC drops significantly when audience has prior organic exposure.</td>
+            <td>Creative fatigue after 7 days managed by vertical rotation. Aviation, Finance, and Logistics variants use identical structure with swapped vocabulary, resetting relevance signals without building new assets.</td>
+          </tr>
+          <tr>
+            <td><strong>Newsletter · Owned List</strong><br><span class="cell-sub">Email · Provenance Framework tool</span></td>
+            <td>Deepens existing audience relationship by delivering the Operational Provenance Framework as a standalone, immediately usable three-question evaluation tool. Pre-qualifies readers as active evaluators before the sales conversation begins.<br><span class="intent-badge intent--med">Medium Intent</span></td>
+            <td>Zero marginal distribution cost. Highest reply-rate channel in the sequence. Each reply is a self-identified warm lead. No platform dependency, no algorithm exposure.</td>
+            <td>Open rate decay over extended lists is offset by segmenting sends to recent engagers first, then re-warming cold segments with the framework tool rather than a direct CTA.</td>
+          </tr>
+          <tr>
+            <td><strong>OOH Airport Terminals</strong><br><span class="cell-sub">Physical billboard · T1 airports</span></td>
+            <td>Environmental priming at peak operational-stress moments. Aviation and logistics executives encountering a delay see the message when the problem being described is physically visible around them. Recognition is immediate and visceral.<br><span class="intent-badge intent--high">High Intent</span></td>
+            <td>CPM $4–$8 in T1 terminals. No direct CTA possible but ABM pixel-match analysis shows 2–3× higher LinkedIn ad conversion rates for accounts in geo-targeted terminal corridors during activation windows.</td>
+            <td>No direct CTA capture mitigated by brand recall lift measured through LinkedIn matched audiences. OOH functions as a trust primer that drops the conversion friction on all downstream digital touchpoints.</td>
+          </tr>
+          <tr>
+            <td><strong>SEO Blog Hub</strong><br><span class="cell-sub">Ungated · Long-form, no gate</span></td>
+            <td>Ungated hub article structures the category argument permanently. Designed for GEO positioning so AI search surfaces it when enterprise buyers query AI deployment risk. Every supporting article links back, compounding domain authority.<br><span class="intent-badge intent--med">Medium Intent</span></td>
+            <td>Zero per-visit cost after production. Organic sessions scale without incremental spend. GEO citation exposure in AI-generated answers compounds brand presence in contexts where paid ads cannot appear.</td>
+            <td>6–9 month ranking lag is front-loaded by the paid and organic LinkedIn activation in Week 1, which generates immediate backlinks and social proof signals that accelerate initial indexing velocity.</td>
+          </tr>
+          <tr>
+            <td><strong>ABM Retargeting</strong><br><span class="cell-sub">Paid · Demo-focused creative only</span></td>
+            <td>Closes the funnel on accounts that have already consumed the narrative. Retargeting creative is stripped of all educational content and replaced with a single, direct demo invitation. The case has already been made.<br><span class="intent-badge intent--crit">Critical Intent</span></td>
+            <td>$18–$32 per demo booked when audience has prior organic plus paid exposure. 60–70% lower CPA vs. cold outreach. Pipeline dollar value per demo request averages $80K–$200K at enterprise contract size.</td>
+            <td>Requires prior brand exposure. Solved structurally: retargeting activates only in Week 6+ after organic, paid, newsletter, and OOH have run, ensuring no account enters retargeting cold.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="reveal">
-      <div class="tab-nav" role="tablist">
-        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="logistics">Logistics</button>
-        <button class="tab-btn" role="tab" data-tab="aviation">Aviation</button>
-        <button class="tab-btn" role="tab" data-tab="finance">Finance</button>
-        <button class="tab-btn" role="tab" data-tab="timeline">Timeline</button>
+      <div class="tab-nav" role="tablist" aria-label="Distribution verticals">
+        <button class="tab-btn" role="tab" aria-selected="true"  aria-controls="tab-logistics" id="tbtn-logistics" data-tab="logistics">Logistics</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-aviation"  id="tbtn-aviation"  data-tab="aviation">Aviation</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-finance"   id="tbtn-finance"   data-tab="finance">Finance</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-timeline"  id="tbtn-timeline"  data-tab="timeline">Timeline</button>
       </div>
+
       <div class="tab-panels">
-        <div class="tab-panel active" id="tab-logistics">
-          <div class="tab-panel__label">Core Vertical · Logistics & Freight</div>
-          <div class="tab-panel__hook">The driver doesn't answer.<br><em>Your AI already called the next one.</em></div>
-          <div class="channel-grid">
-            <div class="channel-cell"><div class="channel-cell__type">Organic / Founder</div><h4>LinkedIn Founder Post</h4><p>One sharp provocation in the founder's voice. Ends on unresolved tension — the article is the resolution. No pitch. Pure operational pattern-matching.</p></div>
-            <div class="channel-cell"><div class="channel-cell__type">Organic / Newsletter</div><h4>Provenance Framework</h4><p>Three-question framework delivered as a standalone tool. Converts passive readers into active evaluators. Pre-sales qualification with zero friction.</p></div>
-            <div class="channel-cell"><div class="channel-cell__type">Paid / ABM</div><h4>LinkedIn ABM Social</h4><p>Vertical-specific vocabulary. Seven-word headline maximum. One proof anchor. Runs concurrent with organic post — reinforcement, not repetition.</p></div>
+
+        <!-- LOGISTICS -->
+        <div class="tab-panel active" id="tab-logistics" role="tabpanel" aria-labelledby="tbtn-logistics">
+          <p class="tab-panel__eyebrow">Core Vertical · Logistics and Freight</p>
+          <p class="tab-panel__hook">The driver doesn't answer.<br><em>Our AI already called the next one.</em></p>
+          <div class="channel-row">
+            <div class="channel-cell">
+              <p class="channel-cell__type">Organic / Founders</p>
+              <h4>LinkedIn Founders Post</h4>
+              <p>One provocation in the founders' own voice. Not a summary, just a single tension point. Ends unresolved because the article is the resolution.</p>
+            </div>
+            <div class="channel-cell">
+              <p class="channel-cell__type">Organic / Newsletter</p>
+              <h4>Provenance Framework</h4>
+              <p>Three-question framework delivered as a standalone tool seven days after the LinkedIn post. Converts passive readers into active evaluators with zero friction.</p>
+            </div>
+            <div class="channel-cell">
+              <p class="channel-cell__type">Paid / ABM</p>
+              <h4>LinkedIn ABM Social</h4>
+              <p>Same thesis, vertical vocabulary. Seven-word headline maximum. One proof anchor. Runs concurrent with organic post so reinforcement lands before repetition.</p>
+            </div>
           </div>
         </div>
-        <div class="tab-panel" id="tab-aviation">
-          <div class="tab-panel__label">Vertical Adaptation · Aviation & Aerospace</div>
-          <div class="tab-panel__hook">Your AI is still analyzing the flight delay...<br><em>Ours already called the passengers and rebooked the slots.</em></div>
-          <div class="channel-grid">
-            <div class="channel-cell"><div class="channel-cell__type">Vocabulary Shift</div><h4>Crew Coordination Failure</h4><p>The thesis doesn't change — only the operational vocabulary does. A COO at a carrier reads "crew coordination failure" and recognizes their own infrastructure immediately.</p></div>
-            <div class="channel-cell"><div class="channel-cell__type">ABM Target</div><h4>VP Operations · Airlines</h4><p>Surgical targeting: airline operations leadership at carriers and ground handlers. Conference priming via OOH at O'Hare, JFK, and Heathrow during aviation trade events.</p></div>
-            <div class="channel-cell"><div class="channel-cell__type">Proof Translation</div><h4>Logistics Record → Aviation Case</h4><p>DHL's global deployment translates directly: both environments run real-time SLA pressure, zero tolerance for silent failure, and legacy fragmentation. The architecture travels.</p></div>
+
+        <!-- AVIATION -->
+        <div class="tab-panel" id="tab-aviation" role="tabpanel" aria-labelledby="tbtn-aviation">
+          <p class="tab-panel__eyebrow">Vertical Adaptation · Aviation and Aerospace</p>
+          <p class="tab-panel__hook">
+            Your AI is still analyzing the flight delay...<br>
+            <em>Ours already called the passengers and rebooked the slots.</em>
+          </p>
+
+          <!-- Airport billboard with uploaded photo background -->
+          <div class="billboard-wrap">
+            <div class="billboard-gradient"></div>
+            <div class="billboard-content">
+              <p class="billboard-content__eyebrow">OOH Billboard · O'Hare · JFK · Heathrow · Canary Wharf</p>
+              <h3 class="billboard-content__headline">
+                Your AI is still analyzing<br>the flight delay...<br>
+                <em>Ours already called the passengers<br>and rebooked the slots.</em>
+              </h3>
+              <div class="billboard-logo">
+                <img src="/mnt/user-data/uploads/happyrobot_-_full_logo_-_black.png" alt="HappyRobot" />
+              </div>
+              <p class="billboard-content__tagline">Autonomous AI workers built for airline chaos</p>
+            </div>
+          </div>
+
+          <div class="channel-row" style="margin-top:22px;">
+            <div class="channel-cell">
+              <p class="channel-cell__type">Vocabulary Shift</p>
+              <h4>Crew Coordination Failure</h4>
+              <p>The thesis stays identical. Only the operational vocabulary shifts. An airline COO reads "crew coordination failure" and instantly recognizes their own infrastructure.</p>
+            </div>
+            <div class="channel-cell">
+              <p class="channel-cell__type">ABM Target</p>
+              <h4>VP Operations · Airlines</h4>
+              <p>Surgical targeting of airline operations leadership at carriers and ground handlers. OOH activation during two weeks surrounding aviation industry trade events.</p>
+            </div>
+            <div class="channel-cell">
+              <p class="channel-cell__type">Proof Translation</p>
+              <h4>Logistics Record to Aviation Case</h4>
+              <p>DHL's global deployment translates directly. Both environments run real-time SLA pressure, zero tolerance for silent failure, and fragmented legacy infrastructure.</p>
+            </div>
           </div>
         </div>
-        <div class="tab-panel" id="tab-finance">
-          <div class="tab-panel__label">Vertical Adaptation · Financial Services</div>
-          <div class="tab-panel__hook">Your software is still sending "friendly reminders"...<br><em>Ours already called the client and collected the payment.</em></div>
-          <div class="channel-grid">
-            <div class="channel-cell"><div class="channel-cell__type">Vocabulary Shift</div><h4>Compliance Audit Exposure</h4><p>The same structural argument — AI built under adversarial conditions — lands with CFOs through the specific vocabulary of their risk environment.</p></div>
-            <div class="channel-cell"><div class="channel-cell__type">ABM Target</div><h4>CFO · Head of Operations</h4><p>Financial services leadership at banks, asset managers, and payment processors. OOH activation at Canary Wharf during major industry conferences.</p></div>
-            <div class="channel-cell"><div class="channel-cell__type">Proof Translation</div><h4>75% Autonomous → Collections Rate</h4><p>Reframe the U.S. Xpress metric inside financial vocabulary: 75% of payment workflows completed without human escalation.</p></div>
+
+        <!-- FINANCE -->
+        <div class="tab-panel" id="tab-finance" role="tabpanel" aria-labelledby="tbtn-finance">
+          <p class="tab-panel__eyebrow">Vertical Adaptation · Financial Services</p>
+          <p class="tab-panel__hook">
+            Your software is still sending "friendly reminders"...<br>
+            <em>Our AI already called the next one.</em>
+          </p>
+          <div class="channel-row">
+            <div class="channel-cell">
+              <p class="channel-cell__type">Vocabulary Shift</p>
+              <h4>Compliance Audit Exposure</h4>
+              <p>The same structural argument lands with CFOs through the specific vocabulary of their risk and compliance environment. The architecture is identical. Only the vertical changes.</p>
+            </div>
+            <div class="channel-cell">
+              <p class="channel-cell__type">ABM Target</p>
+              <h4>CFO · Head of Operations</h4>
+              <p>Financial services leadership at banks, asset managers, and payment processors. OOH activation at Canary Wharf during major industry conferences.</p>
+            </div>
+            <div class="channel-cell">
+              <p class="channel-cell__type">Proof Translation</p>
+              <h4>75% Autonomous to Collections Rate</h4>
+              <p>Reframe the logistics metric inside financial vocabulary. 75% of payment workflows completed without human escalation. The architecture is the same. Only the vertical is different.</p>
+            </div>
           </div>
         </div>
-        <div class="tab-panel" id="tab-timeline">
-          <div class="tab-panel__label">Campaign Sequencing · 6-Week Launch</div>
+
+        <!-- TIMELINE -->
+        <div class="tab-panel" id="tab-timeline" role="tabpanel" aria-labelledby="tbtn-timeline">
+          <p class="tab-panel__eyebrow">Campaign Sequencing · 6-Week Launch</p>
+          <p class="tab-panel__hook">One thesis.<br><em>Five touchpoints. Six weeks.</em></p>
           <div class="timeline">
-            <div class="timeline__row timeline__row--head"><div class="timeline__cell">Week</div><div class="timeline__cell">Action</div><div class="timeline__cell">Function</div></div>
-            <div class="timeline__row"><div class="timeline__cell timeline__cell--week">Week 1</div><div class="timeline__cell">Founder LinkedIn post + ABM ads launch simultaneously</div><div class="timeline__cell">Organic provocation + paid interception. Simultaneous.</div></div>
-            <div class="timeline__row"><div class="timeline__cell timeline__cell--week">Week 2</div><div class="timeline__cell">Newsletter deploys + OOH activates at conference corridors</div><div class="timeline__cell">Deepen existing audience + prime target accounts in physical transit</div></div>
-            <div class="timeline__row"><div class="timeline__cell timeline__cell--week">Week 3</div><div class="timeline__cell">Rotate ABM creative by vertical</div><div class="timeline__cell">Re-engage exposed accounts without ad fatigue. Fresh signal.</div></div>
-            <div class="timeline__row"><div class="timeline__cell timeline__cell--week">Wk 3–6</div><div class="timeline__cell">SEO supporting articles publish; each links to hub</div><div class="timeline__cell">Authority compounds. GEO citations accumulate.</div></div>
-            <div class="timeline__row"><div class="timeline__cell timeline__cell--week">Week 6+</div><div class="timeline__cell">ABM retargeting — demo-focused creative only</div><div class="timeline__cell">Convert article readers into pipeline. Revenue stage.</div></div>
+            <div class="timeline__row timeline__row--head">
+              <div class="timeline__cell">Week</div>
+              <div class="timeline__cell">Action</div>
+              <div class="timeline__cell">Function</div>
+            </div>
+            <div class="timeline__row">
+              <div class="timeline__cell timeline__cell--week">Week 1</div>
+              <div class="timeline__cell">Founders LinkedIn post and ABM ads launch simultaneously</div>
+              <div class="timeline__cell">Organic provocation plus paid interception. Simultaneous impact.</div>
+            </div>
+            <div class="timeline__row">
+              <div class="timeline__cell timeline__cell--week">Week 2</div>
+              <div class="timeline__cell">Newsletter deploys. OOH activates at conference corridors.</div>
+              <div class="timeline__cell">Deepen existing audience and prime target accounts in physical transit.</div>
+            </div>
+            <div class="timeline__row">
+              <div class="timeline__cell timeline__cell--week">Week 3</div>
+              <div class="timeline__cell">Rotate ABM creative by vertical</div>
+              <div class="timeline__cell">Re-engage exposed accounts without ad fatigue. Fresh signal.</div>
+            </div>
+            <div class="timeline__row">
+              <div class="timeline__cell timeline__cell--week">Wk 3 to 6</div>
+              <div class="timeline__cell">SEO supporting articles publish. Each links back to hub.</div>
+              <div class="timeline__cell">Authority compounds. GEO citations accumulate. Inbound grows.</div>
+            </div>
+            <div class="timeline__row">
+              <div class="timeline__cell timeline__cell--week">Week 6+</div>
+              <div class="timeline__cell">ABM retargeting with demo-focused creative only</div>
+              <div class="timeline__cell">Convert article readers into pipeline. Revenue stage.</div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </section>
 
-<!-- LINKEDIN MOCKUPS -->
-<section id="linkedin" class="linkedin-section">
+<!-- ============================================================
+     LINKEDIN MOCKUPS
+============================================================ -->
+<section id="linkedin" class="linkedin-section section">
   <div class="container--wide">
     <div class="container">
-      <div class="section-marker reveal"><span class="section-marker__num">03</span><div class="section-marker__rule"></div></div>
-      <h2 class="section-heading reveal">LinkedIn<br><em>Asset</em></h2>
-      <p class="abstract__body reveal" style="margin-bottom:0">Standalone thought leadership. Not a blog summary. One sharp idea in operational vocabulary that makes every enterprise COO stop and recognize their own infrastructure — before they have heard of HappyRobot.</p>
+      <div class="section-rule reveal">
+        <span class="section-rule__label">03 LinkedIn Asset</span>
+        <div class="section-rule__line"></div>
+      </div>
+      <h2 class="t-display t-display--lg reveal" style="margin-bottom:13px;">
+        LinkedIn <em style="font-style:italic;font-weight:300;">Asset.</em>
+      </h2>
+      <!-- Execution framework meta-label -->
+      <div class="reveal" style="margin-bottom:18px;">
+        <span class="carousel-meta-badge">
+          <svg viewBox="0 0 6 6" fill="var(--ink)" aria-hidden="true"><circle cx="3" cy="3" r="3"/></svg>
+          Preview: Native Copy + Carousel Ad Asset
+        </span>
+      </div>
+      <p class="reveal" style="font-size:17px;color:var(--muted);max-width:540px;margin-bottom:0;line-height:1.65;">
+        Standalone thought leadership. Not a blog summary. One sharp idea in operational vocabulary that makes every enterprise COO stop and recognize their own infrastructure before they've heard of HappyRobot.
+      </p>
     </div>
-    <div class="linkedin-grid">
-      <!-- Phone -->
+
+    <div class="linkedin-grid" style="padding:0 24px;margin-top:56px;">
+
+      <!-- LEFT: Phone 390×780 with inner scrollable feed -->
       <div class="reveal">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="phone-status">
-              <span class="phone-time">9:41</span>
-              <div class="phone-icons">
-                <svg width="14" height="10" viewBox="0 0 14 10"><rect x="0" y="6" width="2" height="4"/><rect x="3" y="4" width="2" height="6"/><rect x="6" y="2" width="2" height="8"/><rect x="9" y="0" width="2" height="10"/><rect x="12" y="0" width="2" height="10" opacity=".3"/></svg>
-                <svg width="18" height="10" viewBox="0 0 18 10"><rect x="0" y="1" width="15" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1"/><rect x="15.5" y="3" width="1.5" height="4" rx="1"/><rect x="1" y="2" width="11" height="6" rx="0.5"/></svg>
+        <div class="phone-wrap">
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-status">
+                <span class="phone-status__time">9:41</span>
+                <div class="phone-status__icons">
+                  <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true">
+                    <rect x="0" y="6" width="2" height="4" rx="0.5"/>
+                    <rect x="3" y="4" width="2" height="6" rx="0.5"/>
+                    <rect x="6" y="2" width="2" height="8" rx="0.5"/>
+                    <rect x="9" y="0" width="2" height="10" rx="0.5"/>
+                    <rect x="12" y="0" width="2" height="10" rx="0.5" opacity="0.25"/>
+                  </svg>
+                  <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+                    <rect x="0.5" y="1" width="14" height="8" rx="1.5" stroke="currentColor" stroke-width="1"/>
+                    <rect x="15" y="3" width="2" height="4" rx="1" fill="currentColor"/>
+                    <rect x="1.5" y="2" width="10" height="6" rx="0.8" fill="currentColor"/>
+                  </svg>
+                </div>
               </div>
-            </div>
-            <div class="li-feed">
-              <div class="li-search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>Search</span></div>
-              <div class="li-post">
-                <div class="li-post__header">
-                  <div class="li-avatar">
-                    <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="42" height="42" rx="21" fill="#111111"/>
-                      <rect x="11" y="13" width="20" height="15" rx="2.5" stroke="#F5F3EE" stroke-width="1.6" fill="none"/>
-                      <rect x="14" y="17.5" width="4" height="4" rx="1.2" fill="#F5F3EE"/>
-                      <rect x="24" y="17.5" width="4" height="4" rx="1.2" fill="#F5F3EE"/>
-                      <rect x="16.5" y="23.5" width="9" height="2" rx="1" fill="#F5F3EE"/>
-                      <rect x="18.5" y="9" width="5" height="4.5" rx="1.2" fill="#F5F3EE"/>
-                    </svg>
-                  </div>
-                  <div class="li-post__meta"><div class="li-post__name">HappyRobot</div><div class="li-post__sub">AI Workforce Infrastructure · 3h</div></div>
-                  <button class="li-follow-btn">+ Follow</button>
+              <!-- Scrollable inner feed -->
+              <div class="li-feed">
+                <div class="li-searchbar">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9a9a9a" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  Search
                 </div>
-                <div class="li-post__body">
-                  <p><strong>Most AI deployments don't fail at launch.</strong></p>
-                  <p>They fail on a Tuesday. The legacy system drops the feed. Two workflows collide at 2 AM. No fallback.</p>
-                  <p>That's not a bug. That's the architecture <em>revealing itself.</em></p>
-                  <p><strong>Ask for the incident report. Not the demo.</strong></p>
-                </div>
-                <div class="li-reactions"><span class="li-reaction-count">👍❤️💡 1,247</span><span class="li-reaction-count">214 comments</span></div>
-                <div class="li-actions">
-                  <!-- Like: thumbs-up stroke -->
-                  <div class="li-action">
-                    <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-                    Like
+                <div class="li-post-card">
+                  <div class="li-post-header">
+                    <div class="li-avatar">
+                      <img src="/mnt/user-data/uploads/happyrobot_-_full_logo_-_black.png" alt="HappyRobot" />
+                    </div>
+                    <div class="li-post-meta">
+                      <div class="li-post-name">HappyRobot</div>
+                      <div class="li-post-sub">AI Workforce Infrastructure · 3h</div>
+                    </div>
+                    <button class="li-follow-btn">+ Follow</button>
                   </div>
-                  <!-- Comment: speech bubble stroke -->
-                  <div class="li-action">
-                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    Comment
+                  <div class="li-post-body">
+                    <p><strong>Most AI deployments don't fail at launch.</strong></p>
+                    <p>They fail on a Tuesday. Three weeks in. The legacy system drops the feed, the driver doesn't answer, and two workflows collide at 2 AM with no human fallback.</p>
+                    <p>That's not a bug. That's the architecture <em>revealing itself.</em></p>
+                    <p>The question no enterprise buyer is asking their AI vendor, but should be, is not "what can your system do?" It is "what has your system already survived?"</p>
+                    <p>HappyRobot was built inside the pressure. Not introduced to it.</p>
+                    <p><strong>Ask for the incident report. Not the demo.</strong></p>
                   </div>
-                  <!-- Repost: arrows stroke -->
-                  <div class="li-action">
-                    <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-                    Repost
+                  <div class="li-reactions">
+                    <span>&#128077;&#10084;&#128161; 1,247</span>
+                    <span>214 comments</span>
                   </div>
-                  <!-- Send: paper plane stroke -->
-                  <div class="li-action">
-                    <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                    Send
+                  <div class="li-actions">
+                    <div class="li-action">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>Like
+                    </div>
+                    <div class="li-action">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment
+                    </div>
+                    <div class="li-action">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Repost
+                    </div>
+                    <div class="li-action">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="linkedin-caption"><h3>Feed Post — Founder Voice</h3><p>One provocation. No product pitch. Ends on unresolved tension so the article becomes the resolution.</p></div>
+        <div class="li-caption">
+          <h3>Feed Post · Founders Voice</h3>
+          <p>One provocation. No product pitch. Ends on unresolved tension so the article becomes the resolution.</p>
+        </div>
       </div>
 
-      <!-- Carousel -->
-      <div class="reveal reveal-delay-2">
-        <div class="carousel-desktop" id="js-carousel">
-          <div class="carousel-ad-top"><span>LinkedIn Sponsored</span><span>HappyRobot · AI Workforce Infrastructure</span></div>
-          <div class="carousel-slides-wrap">
-            <div class="carousel-track" id="js-track">
-              <div class="carousel-slide" data-num="01"><div class="cs-label">The Hook · 01 / 05</div><div class="cs-headline">Your AI passed<br>every test.<br><em>Then it met Tuesday.</em></div><p class="cs-sub">The discomfort of recognition does the work before the copy does.</p></div>
-              <div class="carousel-slide" data-num="02" style="background:#F0EDE6"><div class="cs-label">The Flaw · 02 / 05</div><div class="cs-headline">Built in a lab.<br><em>Deployed in reality.</em></div><p class="cs-sub">The demo: clean data, optimal conditions. Tuesday: cascading failures, 2 AM. No fallback.</p></div>
-              <div class="carousel-slide" data-num="03"><div class="cs-label">The Standard · 03 / 05</div><div class="cs-headline">Where was<br>this system<br><em>actually built?</em></div><p class="cs-sub">Not demoed. Not piloted. Built inside the most operationally hostile environment on earth.</p></div>
-              <div class="carousel-slide" data-num="04" style="background:#111;color:#F5F3EE"><div class="cs-label" style="color:rgba(245,243,238,.4)">The Proof · 04 / 05</div><div class="cs-big" style="color:#F5F3EE">75%</div><div class="cs-label" style="color:rgba(245,243,238,.6);font-size:13px;letter-spacing:.04em;text-transform:none;margin-bottom:4px">Autonomous Resolution — U.S. Xpress</div><p class="cs-sub" style="color:rgba(245,243,238,.45)">DHL · Global multi-region deployment at scale</p></div>
-              <div class="carousel-slide" data-num="05" style="background:#F0EDE6"><div class="cs-label">The Conclusion · 05 / 05</div><div class="cs-headline" style="font-size:clamp(22px,3vw,34px)">"The fire wasn't<br>the obstacle.<br><em>It was the qualification."</em></div><p class="cs-sub">Ask for the incident report. Not the demo.</p></div>
+      <!-- RIGHT: Carousel — Technical Clean standard -->
+      <div class="reveal d2">
+        <div class="carousel-wrap">
+          <div class="carousel-frame" id="js-carousel">
+            <div class="carousel-topbar">
+              <span>LinkedIn Sponsored</span>
+              <span>HappyRobot · AI Workforce Infrastructure</span>
+            </div>
+            <div class="carousel-slides-container">
+              <div class="carousel-track" id="js-track">
+
+                <!-- Slide 1: Cream cover — centered massive hook -->
+                <div class="carousel-slide slide--cover" data-n="01">
+                  <p class="slide-kicker">The Hook · 01 / 05</p>
+                  <h3 class="slide-cover-headline">
+                    Your AI passed<br>every test.<br><em>Then it met<br>Tuesday.</em>
+                  </h3>
+                </div>
+
+                <!-- Slide 2: Terminal / dark dashboard -->
+                <div class="carousel-slide slide--dashboard" data-n="02">
+                  <div class="terminal-header">
+                    <div class="terminal-dot td-r"></div>
+                    <div class="terminal-dot td-y"></div>
+                    <div class="terminal-dot td-g"></div>
+                    <span class="terminal-title">production · workflow-engine · live</span>
+                  </div>
+                  <div class="log-lines">
+                    <div class="log-line"><span class="log-time">02:14:07</span><span class="log-ok">[OK]</span>&nbsp; carrier_api connected · latency 48ms</div>
+                    <div class="log-line"><span class="log-time">02:14:09</span><span class="log-warn">[WARN]</span> driver_id:8821 · no response (retry 1/3)</div>
+                    <div class="log-line"><span class="log-time">02:14:11</span><span class="log-err">[ERR]</span>&nbsp; driver_id:8821 · escalation triggered</div>
+                    <div class="log-line"><span class="log-time">02:14:11</span><span class="log-info">[AI]</span>&nbsp; routing to driver_id:9042 · available</div>
+                    <div class="log-line"><span class="log-time">02:14:13</span><span class="log-ok">[OK]</span>&nbsp; driver_id:9042 confirmed · SLA maintained</div>
+                    <div class="log-line"><span class="log-time">02:14:13</span><span class="log-info">[AI]</span>&nbsp; 0 human escalations · workflow resolved</div>
+                  </div>
+                  <p class="slide-label-dk">The Flaw · 02 / 05</p>
+                </div>
+
+                <!-- Slide 3: Light metric — centered -->
+                <div class="carousel-slide slide--light" data-n="03">
+                  <p class="slide-label">The Standard · 03 / 05</p>
+                  <div class="slide-metric">75%</div>
+                  <p class="slide-metric-sub">Autonomous Resolution on critical workflows · U.S. Xpress · Live production, not a pilot.</p>
+                </div>
+
+                <!-- Slide 4: Progress dashboard — centered layout -->
+                <div class="carousel-slide slide--progress" data-n="04">
+                  <p class="slide-label" style="text-align:center;margin-bottom:20px;">The Proof · 04 / 05</p>
+                  <div class="progress-block">
+                    <div class="progress-label"><span>Autonomous Resolution</span><span>75%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="--w:75%"></div></div>
+                  </div>
+                  <div class="progress-block">
+                    <div class="progress-label"><span>SLA Compliance</span><span>99.2%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="--w:99%"></div></div>
+                  </div>
+                  <div class="progress-block">
+                    <div class="progress-label"><span>Human Escalations Avoided</span><span>94%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="--w:94%"></div></div>
+                  </div>
+                  <div class="progress-block">
+                    <div class="progress-label"><span>Multi-Region Uptime</span><span>99.9%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="--w:99.9%"></div></div>
+                  </div>
+                  <p class="slide-footer-label">DHL · U.S. Xpress · Global Production</p>
+                </div>
+
+                <!-- Slide 5: Dark CTA — centered -->
+                <div class="carousel-slide slide--dark" data-n="05">
+                  <p class="slide-label">Conclusion · 05 / 05</p>
+                  <h3 class="slide-headline">
+                    "The fire wasn't<br>the obstacle.<br><em>It was the qualification."</em>
+                  </h3>
+                  <p class="slide-body">Ask for the incident report. Not the demo.</p>
+                </div>
+
+              </div>
+            </div>
+            <div class="carousel-controls">
+              <div class="carousel-arrows">
+                <button class="carousel-arrow" id="js-prev" aria-label="Previous">&#8592;</button>
+                <button class="carousel-arrow" id="js-next" aria-label="Next">&#8594;</button>
+              </div>
+              <div class="carousel-dots" id="js-dots">
+                <div class="c-dot on"></div>
+                <div class="c-dot"></div>
+                <div class="c-dot"></div>
+                <div class="c-dot"></div>
+                <div class="c-dot"></div>
+              </div>
+              <span class="carousel-count" id="js-count">1 / 5</span>
             </div>
           </div>
-          <div class="carousel-controls">
-            <div class="carousel-arrows"><button class="carousel-arrow" id="js-prev">&#8592;</button><button class="carousel-arrow" id="js-next">&#8594;</button></div>
-            <div class="carousel-dots" id="js-dots"><div class="c-dot active"></div><div class="c-dot"></div><div class="c-dot"></div><div class="c-dot"></div><div class="c-dot"></div></div>
-            <span class="carousel-count" id="js-count">1 / 5</span>
-          </div>
         </div>
-        <div class="linkedin-caption"><h3>LinkedIn Carousel — Native Ad Format</h3><p>1:1 aspect ratio. Native LinkedIn ad dimensions. Arrow navigation + pagination dots. Hover to reveal full brand color.</p></div>
+        <div class="li-caption">
+          <h3>Carousel · Technical Clean Format</h3>
+          <p>1:1 native ad ratio. Cream cover, live terminal log, metric slides, dark CTA closer. All slides centered. Hover activates full brand color.</p>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ADS -->
-<section id="ads" class="ads">
+<!-- ============================================================
+     AD COPY — dark
+============================================================ -->
+<section id="ads" class="ads section section--dark">
   <div class="container">
-    <div class="section-marker reveal"><span class="section-marker__num">04</span><div class="section-marker__rule"></div></div>
-    <h2 class="section-heading reveal">Ad Copy &<br><em>Visual Direction</em></h2>
-    <div class="ad-grid reveal">
+
+    <div class="section-rule reveal">
+      <span class="section-rule__label">04 Ad Copy and Visual Direction</span>
+      <div class="section-rule__line"></div>
+    </div>
+
+    <h2 class="t-display t-display--lg reveal" style="color:var(--cream);margin-bottom:0;">
+      Ad Copy and<br><em style="font-style:italic;font-weight:300;color:rgba(245,243,238,.3);">Visual Direction</em>
+    </h2>
+
+    <div class="ads-grid reveal">
       <div class="ad-card">
-        <div class="ad-card__variant">Variant 1 — Digital ABM / LinkedIn · COO / CDO / VP Operations</div>
-        <div class="ad-card__headline">Your AI has<br>never seen<br>a Tuesday.</div>
-        <p class="ad-card__body">Every enterprise workflow breaks under real load. HappyRobot was built inside that load — not introduced to it.</p>
+        <p class="ad-card__variant">Variant 1 · Digital ABM / LinkedIn · COO / CDO / VP Operations</p>
+        <h3 class="ad-card__headline">Your AI has<br>never seen<br>a Tuesday.</h3>
+        <p class="ad-card__body">Every enterprise workflow breaks under real load. HappyRobot was built inside that load, not introduced to it.</p>
         <a href="#" class="ad-card__cta">See how it holds in production &#8594;</a>
-        <p class="ad-card__rationale">"Tuesday" names the exact moment every deployment meets reality. No product features. No claims. One scene. Total recognition before the body copy runs. The COO has already lived through a failed AI pilot — the word unlocks the memory.</p>
+        <p class="ad-card__note">"Tuesday" names the exact moment every deployment meets reality. No product features. No claims. One scene. Total recognition before the body copy runs.</p>
       </div>
       <div class="ad-card">
-        <div class="ad-card__variant">Variant 2 — OOH Airport Billboard · O'Hare · JFK · Heathrow · Canary Wharf</div>
-        <div class="ad-card__headline">Forged in the world's most unforgiving industry.<br>Built for yours.</div>
-        <p class="ad-card__body" style="margin-top:8px;font-size:13px;color:rgba(245,243,238,.35)">— HappyRobot</p>
-        <p class="ad-card__rationale">At three-second dwell time, photography competes with the words. This message is the visual. "Forged" implies survival, not design. "Built for yours" closes without naming a vertical — every industry reads itself into it.</p>
+        <p class="ad-card__variant">Variant 2 · OOH Airport Billboard · O'Hare · JFK · Heathrow · Canary Wharf</p>
+        <h3 class="ad-card__headline">Forged in the world's most unforgiving industry.<br>Built for yours.</h3>
+        <p class="ad-card__body" style="font-size:12px;color:rgba(245,243,238,0.26);margin-top:6px;">HappyRobot</p>
+        <p class="ad-card__note">At three-second dwell time, photography competes with the words. This message is the visual. "Forged" implies survival, not design. "Built for yours" closes without naming a vertical so every industry reads itself into it.</p>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- VISUAL DIRECTION -->
-<section class="visual-dir">
-  <div class="container">
-    <div class="section-marker reveal"><span class="section-marker__num">04–B</span><div class="section-marker__rule"></div></div>
-    <h2 class="section-heading reveal">Visual<br><em>Direction</em></h2>
     <div class="vis-grid reveal">
       <div class="vis-card">
-        <div class="vis-card__title">ABM Digital Ad</div>
-        <div class="vis-row"><div class="vis-key">Concept</div><div class="vis-val">Operations control center. Lone operator facing live monitoring screens — shot from behind. No faces. Real data: timestamps, route IDs, exception flags.</div></div>
-        <div class="vis-row"><div class="vis-key">Palette</div><div class="vis-val">Desaturated 40%. Cool blue-green from screens. No warm tones. Functional, not aspirational.</div></div>
-        <div class="vis-row"><div class="vis-key">Type</div><div class="vis-val">Inter Black 900 headline on translucent white bar. Light 300 body. Extreme weight contrast — the shift is the design system.</div></div>
-        <div class="vis-row"><div class="vis-key">Signal</div><div class="vis-val">The COO recognizes the scene before reading a word. Recognition precedes persuasion.</div></div>
+        <div class="vis-card__title">ABM Digital Ad · Art Direction</div>
+        <div class="vis-row"><span class="vis-key">Concept</span><span class="vis-val">Operations control center. Lone operator facing live monitoring screens, shot from behind. No faces. Real data: timestamps, route IDs, exception flags.</span></div>
+        <div class="vis-row"><span class="vis-key">Palette</span><span class="vis-val">Desaturated 40%. Cool blue-green from screens. No warm tones. Functional, not aspirational.</span></div>
+        <div class="vis-row"><span class="vis-key">Type</span><span class="vis-val">Inter Black 900 headline on translucent white bar. Inter Light 300 body. Extreme weight contrast.</span></div>
+        <div class="vis-row"><span class="vis-key">Signal</span><span class="vis-val">The COO recognizes the scene before reading a word. Recognition precedes persuasion.</span></div>
       </div>
       <div class="vis-card">
-        <div class="vis-card__title">OOH Airport Billboard</div>
-        <div class="vis-row"><div class="vis-key">Concept</div><div class="vis-val">Pure typographic execution. No photography. Off-white background. Black type only. Absence of noise signals confidence.</div></div>
-        <div class="vis-row"><div class="vis-key">Palette</div><div class="vis-val">HappyRobot brand base. Nothing else.</div></div>
-        <div class="vis-row"><div class="vis-key">Type</div><div class="vis-val">Inter Black 900 at maximum optical scale. Mono Light 300 attribution. Two cognitive registers — impact, then attribution.</div></div>
-        <div class="vis-row"><div class="vis-key">Signal</div><div class="vis-val">The brand that doesn't fight for attention. Restraint at billboard scale reads as established authority.</div></div>
+        <div class="vis-card__title">OOH Billboard · Art Direction</div>
+        <div class="vis-row"><span class="vis-key">Concept</span><span class="vis-val">Pure typographic execution. No photography. Off-white background. Black type only. Absence of noise signals confidence.</span></div>
+        <div class="vis-row"><span class="vis-key">Palette</span><span class="vis-val">HappyRobot brand base. Nothing else.</span></div>
+        <div class="vis-row"><span class="vis-key">Type</span><span class="vis-val">Inter Black 900 at maximum optical scale. Light 300 attribution. Two cognitive registers: impact, then attribution.</span></div>
+        <div class="vis-row"><span class="vis-key">Signal</span><span class="vis-val">The brand that doesn't fight for attention. Restraint at billboard scale reads as established authority.</span></div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- CLOSING -->
-<div class="closing reveal">
-  <blockquote class="closing__quote">"The fire wasn't<br>the obstacle.<br><em>It was the qualification."</em></blockquote>
-  <p class="closing__attr">HappyRobot — Master Narrative Framework · Content Marketing Case Study · 2026</p>
+<!-- ============================================================
+     CLOSING STATEMENT
+============================================================ -->
+<div class="closing section section--dark reveal">
+  <blockquote>
+    "The fire wasn't<br>the obstacle.<br><em>It was the qualification."</em>
+  </blockquote>
+  <cite>HappyRobot · Content Case Study · Sara Diaz · 2026</cite>
 </div>
 
-<!-- CTA -->
-<section class="cta-section">
+<!-- ============================================================
+     CTA SECTION
+============================================================ -->
+<section class="cta-section section">
   <div class="container">
     <p class="cta-section__lead reveal">Ready to deploy</p>
-    <h2 class="reveal">This is the narrative.<br><em>Now distribute it.</em></h2>
-    <div class="cta-buttons reveal">
+    <h2 class="reveal">
+      This is the narrative.<br><em>Now distribute it.</em>
+    </h2>
+    <div class="btn-row reveal">
       <a href="#distribution" class="btn btn--primary">View Distribution Plan &#8594;</a>
-      <a href="#abstract" class="btn btn--outline">Read Full Abstract</a>
+      <a href="#abstract"     class="btn btn--ghost">Read Full Abstract</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
+<!-- ============================================================
+     FOOTER — clean, no founders block
+============================================================ -->
+<footer class="site-footer">
   <div class="container--wide">
     <div class="footer-inner">
-      <div class="footer-brand">Sara Diaz <span>— Content Case Study</span></div>
-      <div class="footer-meta">HappyRobot Inc. · 4 Deliverables · Forged in Fire Narrative · 2026</div>
+      <div class="footer-brand">Sara Diaz <span>· Content Case Study · HappyRobot Inc.</span></div>
+      <div class="footer-meta">2026</div>
     </div>
   </div>
 </footer>
 
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
 <script>
-/* Hamburger */
-const burger=document.getElementById('js-burger'),overlay=document.getElementById('js-overlay');
-burger.addEventListener('click',()=>{const o=burger.classList.toggle('is-open');overlay.classList.toggle('is-open',o);burger.setAttribute('aria-expanded',o);overlay.setAttribute('aria-hidden',!o);document.body.style.overflow=o?'hidden':''});
-document.querySelectorAll('.js-close-nav').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('is-open');overlay.classList.remove('is-open');burger.setAttribute('aria-expanded',false);overlay.setAttribute('aria-hidden',true);document.body.style.overflow=''}));
+/* Scroll reveal */
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{threshold:0.07,rootMargin:'0px 0px -36px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
 
 /* Smooth scroll */
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-72,behavior:'smooth'})}}));
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(a.getAttribute('href'));
+    if(!t)return;
+    e.preventDefault();
+    window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-66,behavior:'smooth'});
+  });
+});
 
-/* Intersection Observer */
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -48px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+/* Hamburger */
+(function(){
+  var b=document.getElementById('js-burger'),o=document.getElementById('js-overlay');
+  function close(){ b.classList.remove('open');o.classList.remove('open');b.setAttribute('aria-expanded','false');o.setAttribute('aria-hidden','true');document.body.style.overflow=''; }
+  b.addEventListener('click',function(){
+    var open=b.classList.toggle('open');
+    o.classList.toggle('open',open);
+    b.setAttribute('aria-expanded',open);
+    o.setAttribute('aria-hidden',!open);
+    document.body.style.overflow=open?'hidden':'';
+  });
+  document.querySelectorAll('.js-close').forEach(function(a){ a.addEventListener('click',close); });
+})();
 
-/* Tabs */
-document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;document.querySelectorAll('.tab-btn').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected',false)});document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));b.classList.add('active');b.setAttribute('aria-selected',true);document.getElementById('tab-'+t).classList.add('active')}));
+/* Video overlay dismiss */
+(function(){
+  var ov=document.getElementById('js-vid-overlay'),btn=document.getElementById('js-vid-dismiss');
+  if(!ov||!btn)return;
+  btn.addEventListener('click',function(){
+    ov.classList.add('gone');
+    setTimeout(function(){ ov.style.display='none'; },440);
+  });
+})();
+
+/* WAI-ARIA Tabs */
+(function(){
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var tab=btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.setAttribute('aria-selected','true');
+      var p=document.getElementById('tab-'+tab);
+      if(p)p.classList.add('active');
+    });
+  });
+})();
 
 /* Carousel */
 (function(){
-  const track=document.getElementById('js-track'),dots=document.querySelectorAll('#js-dots .c-dot'),countEl=document.getElementById('js-count');
-  const total=track.children.length;let cur=0;
-  function go(n){cur=(n+total)%total;track.style.transform='translateX(-'+(cur*100)+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===cur));countEl.textContent=(cur+1)+' / '+total}
-  document.getElementById('js-next').addEventListener('click',()=>go(cur+1));
-  document.getElementById('js-prev').addEventListener('click',()=>go(cur-1));
-  let ap=setInterval(()=>go(cur+1),4500);
-  const car=document.getElementById('js-carousel');
-  car.addEventListener('mouseenter',()=>clearInterval(ap));
-  car.addEventListener('mouseleave',()=>{ap=setInterval(()=>go(cur+1),4500)});
+  var track=document.getElementById('js-track');
+  var dots=document.querySelectorAll('#js-dots .c-dot');
+  var count=document.getElementById('js-count');
+  if(!track)return;
+  var total=track.children.length, cur=0;
+  function go(n){
+    cur=(n+total)%total;
+    track.style.transform='translateX(-'+(cur*100)+'%)';
+    dots.forEach(function(d,i){ d.classList.toggle('on',i===cur); });
+    count.textContent=(cur+1)+' / '+total;
+  }
+  document.getElementById('js-next').addEventListener('click',function(){ go(cur+1); });
+  document.getElementById('js-prev').addEventListener('click',function(){ go(cur-1); });
+  var ap=setInterval(function(){ go(cur+1); },4500);
+  var car=document.getElementById('js-carousel');
+  car.addEventListener('mouseenter',function(){ clearInterval(ap); });
+  car.addEventListener('mouseleave',function(){ ap=setInterval(function(){ go(cur+1); },4500); });
 })();
 </script>
+
 </body>
 </html>
